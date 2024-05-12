@@ -1,0 +1,85 @@
+.hero.custom-hero {
+  position: relative;
+  color: white;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: auto; /* Cambiado de 100vh a auto para acomodar el contenido adicional debajo */
+  display: flex;
+  flex-direction: column; /* Esto hará que los hijos se alineen verticalmente */
+  align-items: center; /* Centra los hijos horizontalmente */
+  justify-content: center; /* Centra los hijos verticalmente dentro del espacio disponible */
+  text-align: center;
+  padding: 1rem;
+}
+
+
+.carousel-caption {
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 50px; /* Evita que el texto toque el borde inferior */
+}
+
+.carousel-caption h1 {
+  font-size: 2.5rem;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.75);
+  color: #ffffff;
+}
+
+.carousel-caption p {
+  color: #dddddd;
+  font-size: 1.5rem;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.75);
+}
+
+.carousel-caption button {
+  margin: 10px; /* Espacio entre botones y texto */
+  padding: 10px 20px;
+  border-radius: 5px; /* Bordes redondeados para los botones */
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: #000000; /* Mejora la visibilidad */
+  border-radius: 50%;
+  width: 50px; /* Tamaño adecuado para fácil clic */
+  height: 50px;
+}
+
+.carousel-item {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  object-position: center;
+  transition: opacity 0.5s ease-in-out; /* Transición suave */
+}
+
+.carousel-item img {
+  opacity: 0; /* Inicia con opacidad 0 */
+}
+
+.carousel-item.active img {
+  opacity: 1; /* Cambia a opacidad completa cuando está activo */
+}
+
+.video-container {
+  width: 100%;
+  height: 500px;
+  margin-top: 20px;
+}

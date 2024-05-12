@@ -1,0 +1,27 @@
+<!-- login.component.html -->
+<div class="login-container">
+    <div class="login-box">
+      <div class="avatar">
+        <img src="/assets/images/acceso.png" alt="User Icon" />
+      </div>
+      <h2>Inicio de sesión</h2>
+      <form [formGroup]="fgValidator">
+        <div class="input-box">
+          <input type="text" formControlName="username" placeholder="Usuario" required>
+          <div class="warning-validator" *ngIf="fgv['username'].errors && (fgv['username'].dirty || fgv['username'].touched)">
+            <strong *ngIf="fgv['username'].errors['required']">Usuario es requerido.</strong>
+            <strong *ngIf="fgv['username'].errors['minlength']">El usuario debe tener al menos tres caracteres de longitud.</strong>
+          </div>
+        </div>
+        <div class="input-box">
+          <input type="password" formControlName="password" placeholder="Contraseña" required>
+          <div class="warning-validator" *ngIf="fgv['password'].errors && (fgv['password'].dirty || fgv['password'].touched)">
+            <strong>La contraseña es requerida.</strong>
+          </div>
+        </div>
+        <button type="submit" (click)="LoginUser()" class="login-btn">Iniciar sesión</button>
+      </form>
+      <a href="/security/reset-password">¿Olvidé mi contraseña?</a>
+    </div>
+  </div>
+  
