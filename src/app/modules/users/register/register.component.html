@@ -1,0 +1,76 @@
+<div class="registration-container">
+    <div class="registration-box">
+        <div class="header">
+            <img src="/assets/images/registro.png" alt="User Icon" class="avatar"/>
+            <h2>Registro</h2>
+        </div>
+        <form [formGroup]="fgValidator" class="registration-form">
+            <!-- Campo para el código -->
+            <div class="input-field full-width">
+                <input type="text" formControlName="identification" placeholder="Identificación" required>
+                <div class="warning-validator" *ngIf="fgv['identification'].errors && (fgv['identification'].dirty || fgv['identification'].touched)">
+                    <strong *ngIf="fgv['identification'].errors['required']">Este campo es obligatorio.</strong>
+                    <strong *ngIf="fgv['identification'].errors['minlength']">Este campo debe tener al menos 7 números.</strong>
+                    <strong *ngIf="fgv['identification'].errors['pattern']">Debe contener solo números.</strong>
+                </div>
+            </div>
+            <!-- Campo para el documento -->
+            <div class="input-field full-width">
+                <input type="text" formControlName="username" placeholder="Correo electrónico" required>
+                <div class="warning-validator" *ngIf="fgv['username'].errors && (fgv['username'].dirty || fgv['username'].touched)">
+                    <strong *ngIf="fgv['username'].errors['required']">Este campo es obligatorio.</strong>
+                    <strong *ngIf="fgv['username'].errors['email']">El formato del correo electrónico debe ser válido.</strong>
+                </div>
+            </div>
+            <!-- Campo para el nombre -->
+            <div class="input-field half-width">
+                <input type="text" formControlName="name" placeholder="Nombre" required>
+                <div class="warning-validator" *ngIf="fgv['name'].errors && (fgv['name'].dirty || fgv['name'].touched)">
+                    <strong *ngIf="fgv['name'].errors['required']">Este campo es obligatorio.</strong>
+                    <strong *ngIf="fgv['name'].errors['minlength']">Este campo debe tener al menos 4 caracteres.</strong>
+                </div>
+            </div>
+            <!-- Campo para el apellido -->
+            <div class="input-field half-width">
+                <input type="text" formControlName="lastName" placeholder="Apellido" required>
+                <div class="warning-validator" *ngIf="fgv['lastName'].errors && (fgv['lastName'].dirty || fgv['lastName'].touched)">
+                    <strong *ngIf="fgv['lastName'].errors['required']">Este campo es obligatorio.</strong>
+                    <strong *ngIf="fgv['lastName'].errors['minlength']">Este campo debe tener al menos 4 caracteres.</strong>
+                </div>
+            </div>
+            <div class="input-field full-width">
+                <input type="text" formControlName="phone" placeholder="Número de teléfono" required>
+                <div class="warning-validator" *ngIf="fgv['phone'].errors && (fgv['phone'].dirty || fgv['phone'].touched)">
+                    <strong *ngIf="fgv['phone'].errors['required']">Este campo es obligatorio.</strong>
+                    <strong *ngIf="fgv['phone'].errors['minlength']">Este campo debe tener al menos 10 caracteres.</strong>
+                    <strong *ngIf="fgv['phone'].errors['pattern']">Debe contener solo números.</strong>
+                </div>
+            </div>
+            <div class="input-field half-width">
+                <input type="text" formControlName="educationalInstitution" placeholder="Institución educativa" required>
+                <div class="warning-validator"*ngIf="fgv['educationalInstitution'].errors && (fgv['educationalInstitution'].dirty || fgv['educationalInstitution'].touched)">
+                    <strong *ngIf="fgv['educationalInstitution'].errors['required']">Este campo es obligatorio.</strong>
+                    <strong *ngIf="fgv['educationalInstitution'].errors['minlength']">Este campo debe tener al menos 8 caracteres.</strong>
+                </div>
+            </div>
+            <div class="input-field half-width">
+                <input type="password" formControlName="password" placeholder="Contraseña" required>
+                <div class="warning-validator" *ngIf="fgv['password'].errors && (fgv['password'].dirty || fgv['password'].touched)">
+                    <strong *ngIf="fgv['password'].errors['required']">Este campo es obligatorio.</strong>
+                    <strong *ngIf="fgv['password'].errors['minlength']">Este campo debe tener al menos 8 caracteres.</strong>
+                </div>
+            </div>
+            <div class="input-field half-width">
+                <input type="password" formControlName="confirmPassword" placeholder="Confirmar Contraseña" required>
+                <div class="warning-validator" class="warning-validator" *ngIf="fgv['confirmPassword'].errors && (fgv['confirmPassword'].dirty || fgv['confirmPassword'].touched)">
+                  <strong *ngIf="fgv['confirmPassword'].errors['required']">Este campo es obligatorio.</strong>
+                  <strong *ngIf="fgv['confirmPassword'].errors['isMatching'] === false">Las contraseñas no coinciden.</strong>
+                </div>
+            </div>
+            <button type="submit" (click)="UserRegister()" class="register-btn">Crear Cuenta</button>
+        </form>
+        <div class="footer">
+            <p>¿Tienes una cuenta? <a href="/security/login">Iniciar sesión</a></p>
+        </div>
+    </div>
+</div>
