@@ -1,0 +1,28 @@
+<div class="text-center">
+    <h1>Ofertas de Pr&aacute;ctica</h1>
+</div>
+
+<br />
+
+<div class="row">
+    <div class="col-md-6 col-sm-12" *ngIf="!loading">
+        <div class="card" *ngFor="let practiceOffer of practiceOfferList; index as i;"
+            (click)="viewPracticeOffer(practiceOffer, i)" [ngClass]="{'selectedCard': selectedIndex == i}">
+            <div class="card-body">
+                <h5 class="card-title">{{ practiceOffer.area }}</h5>
+                <p class="card-text">{{ practiceOffer.description }}</p>
+                <button (click)="ApplyPostulation(practiceOffer.id)" class="btn btn-primary" *ngIf="!IsApplyPostulation(practiceOffer.id)">Postularme</button>
+                <p class="card-text" *ngIf="IsApplyPostulation(practiceOffer.id)"><strong>Ya aplicaste a esta oferta</strong></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-12 d-flex justify-content-center" *ngIf="loading">
+        <div class="spinner-border" style="width: 5rem; height: 5rem; margin-bottom: 3%;" role="status">
+        </div>
+    </div>
+    <div class="col-md-6">
+        <p><strong>Descripción de la oferta:</strong></p>
+        <p>{{ practiceOffer.description }}</p>
+        <p><strong>Semestre:</strong> {{ practiceOffer.year }}-{{ practiceOffer.semester }}</p>
+    </div>
+</div>

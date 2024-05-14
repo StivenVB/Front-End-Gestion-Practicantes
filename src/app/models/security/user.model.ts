@@ -4,4 +4,5 @@ export class UserModel{
     role?: number;
     isLogged: Boolean = false;
     token?: String;
+    id?: number;
 }
