@@ -63,7 +63,7 @@ export class PracticePostulationListComponent implements OnInit {
       let practiceOffer = this.practiceOfferList.find(o => o.id == p.practiceOfferId);
       if (practiceOffer) {
         let practiceOfferUser: PracticePostulationUserModel = {
-          area: practiceOffer.area,
+          faculty: practiceOffer.faculty,
           description: practiceOffer.description,
           semester: practiceOffer.semester,
           userId: p.userId,

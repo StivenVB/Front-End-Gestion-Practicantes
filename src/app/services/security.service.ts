@@ -23,7 +23,6 @@ export class SecurityService {
 
   verifyActiveSession() {
     let currentSession = this.getSession();
-    console.log(currentSession);
     if (currentSession) {
       let userData = JSON.parse(currentSession);
       this.setUserData(userData);
@@ -96,7 +95,6 @@ export class SecurityService {
    */
   getSession() {
     let currentSession = localStorage.getItem('session');
-    console.log(currentSession);
     return currentSession;
   }
 

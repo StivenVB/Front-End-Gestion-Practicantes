@@ -4,4 +4,5 @@ export class PracticePostulationModel{
     userId?: number;
     practiceOfferId?: number;
     createdAt?: Date;
+    formData?: any;
 }

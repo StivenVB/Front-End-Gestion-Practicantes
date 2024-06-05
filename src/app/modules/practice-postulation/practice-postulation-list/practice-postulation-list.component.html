@@ -8,7 +8,7 @@
     <div class="col-md-4 col-sm-12" *ngIf="!loading">
         <div class="card" *ngFor="let practiceOffer of practiceOfferListUser; index as i;">
             <div class="card-body">
-                <h5 class="card-title">{{ practiceOffer.area }}</h5>
+                <h5 class="card-title">{{ practiceOffer.faculty }}</h5>
                 <p class="card-text">{{ practiceOffer.description }}</p>
                 <p class="card-text"><strong>Estado:</strong> {{ practiceOffer.status }}</p>
                 <p class="card-text"><strong>Aplicaste el {{ practiceOffer.createdAt }}</strong></p>
