@@ -1,5 +1,4 @@
 export class ChangePasswordModel{
-    id?: String;
-    currentPassword?: number;
+    token?: String;
     newPassword?: number;
 }

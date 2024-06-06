@@ -50,14 +50,14 @@ export class SecurityService {
   }
 
   ResetPassword(model: ResetPasswordModel): Observable<Boolean> {
-    return this.http.post<Boolean>(`${ServiceConfig.BASE_URL}password-reset`, model, {
+    return this.http.post<Boolean>(`${ServiceConfig.BASE_URL}auth/forgot-password`, model, {
       headers: new HttpHeaders({
       })
     })
   }
 
   ChangePassword(model: ChangePasswordModel): Observable<Boolean> {
-    return this.http.post<Boolean>(`${ServiceConfig.BASE_URL}change-password`, model, {
+    return this.http.post<Boolean>(`${ServiceConfig.BASE_URL}auth/reset-password`, model, {
       headers: new HttpHeaders({
         Authorization: `Bearer ${this.getToken()}`
       })

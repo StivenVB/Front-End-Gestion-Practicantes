@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SecurityService } from './services/security.service';
 import { UserRegisterService } from './services/user-register.service';
 
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -15,5 +16,5 @@ import { UserRegisterService } from './services/user-register.service';
   providers: [SecurityService, UserRegisterService]
 })
 export class AppComponent {
-  title = 'Gestión-Practicantes';
+  title = 'Bienestar Universitario';
 }

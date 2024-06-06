@@ -1,0 +1,34 @@
+<div class="virtual-library-container">
+    <div class="virtual-library-box">
+      <h2>Biblioteca Virtual</h2>
+      <br>
+      <div class="spinner-container" *ngIf="isLoading">
+        <div class="spinner-content">
+          <div class="spinner-border text-primary" role="status">
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!isLoading" class="table-responsive">
+        <table class="table">
+          <thead class="table-dark">
+            <tr>
+              <th>Fecha de Creación</th>
+              <th>Descripción</th>
+              <th>Descargar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let doc of recordList | paginate: { itemsPerPage: itemsPageAmount, currentPage: page }">
+              <td>{{ doc.createdAt }}</td>
+              <td>{{ doc.description }}</td>
+              <td>
+                <a [href]="doc.url" target="_blank" class="btn btn-primary">Descargar</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <pagination-controls (pageChange)="page = $event"></pagination-controls>
+    </div>
+  </div>
+  

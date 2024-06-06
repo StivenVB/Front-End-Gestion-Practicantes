@@ -1,0 +1,104 @@
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
+<div class="practice-offer-container">
+    <div class="practice-offer-box">
+        <h2>Crear Oferta de Práctica</h2>
+        <br>
+    <div class="spinner-container" *ngIf="isLoading">
+      <div class="spinner-content">
+        <div class="spinner-border text-primary" role="status">
+        </div>
+      </div>
+    </div>
+        <form [formGroup]="fgValidator">
+            <div class="input-box">
+                <label for="faculty">Facultad</label>
+                <input formControlName="faculty" id="faculty" name="faculty" class="form-control" type="text">
+                <div class="warning-validator"
+                    *ngIf="fgv['faculty'].errors && (fgv['faculty'].dirty || fgv['faculty'].touched)">
+                    <strong *ngIf="fgv['faculty'].errors['required']">
+                        El campo es requerido.
+                    </strong>
+                </div>
+            </div>
+            <div class="input-box">
+                <label for="career">Programa</label>
+                <input formControlName="career" id="career" name="career" class="form-control" type="text">
+                <div class="warning-validator"
+                    *ngIf="fgv['career'].errors && (fgv['career'].dirty || fgv['career'].touched)">
+                    <strong *ngIf="fgv['career'].errors['required']">
+                        El campo es requerido.
+                    </strong>
+                </div>
+            </div>
+            <div class="input-box">
+                <label for="description">Descripción</label>
+                <input formControlName="description" id="description" name="description" class="form-control" type="text">
+                <div class="warning-validator"
+                    *ngIf="fgv['description'].errors && (fgv['description'].dirty || fgv['description'].touched)">
+                    <strong *ngIf="fgv['description'].errors['required']">
+                        El campo es requerido.
+                    </strong>
+                </div>
+            </div>
+            <div class="input-box">
+                <label for="year">Año</label>
+                <input formControlName="year" id="year" name="year" class="form-control" type="text">
+                <div class="warning-validator"
+                    *ngIf="fgv['year'].errors && (fgv['year'].dirty || fgv['year'].touched)">
+                    <strong *ngIf="fgv['year'].errors['required']">
+                        El campo es requerido.
+                    </strong>
+                </div>
+            </div>
+            <div class="input-box">
+                <label for="semester">Semestre</label>
+                <input formControlName="semester" id="semester" name="semester" class="form-control" type="text">
+                <div class="warning-validator"
+                    *ngIf="fgv['semester'].errors && (fgv['semester'].dirty || fgv['semester'].touched)">
+                    <strong *ngIf="fgv['semester'].errors['required']">
+                        El campo es requerido.
+                    </strong>
+                </div>
+            </div>
+            <div class="input-box">
+                <label for="isActive">Activo</label>
+                <select class="form-control" formControlName="isActive" id="isActive">
+                    <option [ngValue]="true">true</option>
+                    <option [ngValue]="false">false</option>
+                </select>
+                <div class="warning-validator"
+                    *ngIf="fgv['isActive'].errors && (fgv['isActive'].dirty || fgv['isActive'].touched)">
+                    <strong *ngIf="fgv['isActive'].errors['required']">
+                        El campo es requerido.
+                    </strong>
+                </div>
+            </div>                        
+            <div class="input-box">
+                <label for="startDate">Fecha Inicio</label>
+                <input formControlName="startDate" id="startDate" name="startDate" class="form-control" type="text">
+                <div class="warning-validator"
+                    *ngIf="fgv['startDate'].errors && (fgv['startDate'].dirty || fgv['startDate'].touched)">
+                    <strong *ngIf="fgv['startDate'].errors['required']">
+                        El campo es requerido.
+                    </strong>
+                </div>
+            </div>
+            <div class="input-box">
+                <label for="endDate">Fecha Fin</label>
+                <input formControlName="endDate" id="endDate" name="endDate" class="form-control" type="text">
+                <div class="warning-validator"
+                    *ngIf="fgv['endDate'].errors && (fgv['endDate'].dirty || fgv['endDate'].touched)">
+                    <strong *ngIf="fgv['endDate'].errors['required']">
+                        El campo es requerido.
+                    </strong>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="button" (click)="saveNewRecord()" class="submit-btn">Crear</button>
+                <a class="btn btn-warning" routerLink="/practice-offer-admin/list" role="button">Cancelar</a>
+            </div>
+        </form>
+        <br>
+    </div>
+</div>

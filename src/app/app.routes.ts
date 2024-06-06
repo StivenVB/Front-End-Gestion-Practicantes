@@ -20,6 +20,14 @@ export const routes: Routes = [
         loadChildren: () => import('./modules/users/users.module').then(m => m.UsersModule)
     },
     {
+        path: 'practice-offer-admin',
+        loadChildren: () => import('./modules/practice-offer-admin/practice-offer-admin.module').then(m => m.PracticeOfferAdminModule)
+    },
+    {
+        path: 'virtual-library',
+        loadChildren: () => import('./modules/virtual-library/virtual-library.module').then(m => m.VirtualLibraryModule)
+    },
+    {
         path: '**',
         redirectTo: '/home'
     }

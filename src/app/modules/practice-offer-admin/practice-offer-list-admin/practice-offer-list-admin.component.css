@@ -1,0 +1,95 @@
+/* styles.css */
+.practice-offer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #3a6073, #16222a);
+  padding: 50px 0; /* Espacio superior e inferior */
+}
+
+.practice-offer-box {
+  background: white;
+  padding: 30px 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 1200px; /* Ampliado para acomodar mejor la tabla */
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  overflow: hidden; /* Asegura que el contenido no se desborde */
+}
+
+.practice-offer-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+/* Estilos adicionales para manejar el desbordamiento de la tabla */
+.table-responsive {
+  overflow-x: auto;
+}
+
+.table {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+/* Estilos personalizados para los encabezados de la tabla */
+.table th {
+  background-color: #4a69bd; /* Un azul más oscuro que el azul oscuro por defecto */
+  color: white;
+}
+
+/* Estilos para botones dentro de la tabla para una mejor visualización */
+.table .btn {
+  margin: 2px; /* Asegura un pequeño espacio entre botones */
+}
+
+/* Estilos para mejorar la visibilidad y el contraste del modal de confirmación */
+.modal-content {
+  background-color: #f8f9fa; /* Un fondo más claro para el modal */
+}
+
+.modal-header {
+  background-color: #6c7ae0; /* Un color de fondo distinto para la cabecera del modal */
+  color: white;
+}
+
+.modal-footer {
+  padding: 10px 20px; /* Ajusta el padding del pie del modal para mayor consistencia */
+}
+
+/* Estilos para el spinner */
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px; /* Ajusta el tamaño mínimo del contenedor del spinner */
+}
+
+.spinner-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner-content .spinner-border {
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: 10px;
+}
+
+.spinner-content p {
+  font-size: 20px;
+  color: white;
+  margin: 0;
+}
