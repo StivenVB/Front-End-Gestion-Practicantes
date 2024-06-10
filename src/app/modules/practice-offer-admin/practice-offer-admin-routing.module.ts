@@ -3,23 +3,23 @@ import { RouterModule, Routes } from '@angular/router';
 import { PracticeOfferListAdminComponent } from './practice-offer-list-admin/practice-offer-list-admin.component';
 import { PracticeOfferCreationAdminComponent } from './practice-offer-creation-admin/practice-offer-creation-admin.component';
 import { PracticeOfferEditionAdminComponent } from './practice-offer-edition-admin/practice-offer-edition-admin.component';
-import { AuthenticatedGuard } from '../../guards/authenticated.guard';
+import { AuthenticatedAdminGuard } from '../../guards/authenticated-admin.guard';
 
 const routes: Routes = [
   {
     path: 'list',
     component: PracticeOfferListAdminComponent,
-    canActivate: [AuthenticatedGuard]
+    canActivate: [AuthenticatedAdminGuard]
   },
   {
     path: 'creation',
     component: PracticeOfferCreationAdminComponent,
-    canActivate: [AuthenticatedGuard]
+    canActivate: [AuthenticatedAdminGuard]
   },
   {
     path: 'edition/:id',
     component: PracticeOfferEditionAdminComponent,
-    canActivate: [AuthenticatedGuard]
+    canActivate: [AuthenticatedAdminGuard]
   }
 ];
 

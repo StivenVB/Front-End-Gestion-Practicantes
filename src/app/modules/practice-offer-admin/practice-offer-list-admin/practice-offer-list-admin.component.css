@@ -1,11 +1,10 @@
-/* styles.css */
 .practice-offer-container {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   background: linear-gradient(135deg, #3a6073, #16222a);
-  padding: 50px 0; /* Espacio superior e inferior */
+  padding: 50px 0;
 }
 
 .practice-offer-box {
@@ -14,10 +13,10 @@
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.1);
   width: 100%;
-  max-width: 1200px; /* Ampliado para acomodar mejor la tabla */
+  max-width: 1200px;
   text-align: center;
   transition: transform 0.3s, box-shadow 0.3s;
-  overflow: hidden; /* Asegura que el contenido no se desborde */
+  overflow: hidden;
 }
 
 .practice-offer-box:hover {
@@ -31,7 +30,6 @@ h2 {
   color: #333;
 }
 
-/* Estilos adicionales para manejar el desbordamiento de la tabla */
 .table-responsive {
   overflow-x: auto;
 }
@@ -40,39 +38,77 @@ h2 {
   margin-top: 20px;
   margin-bottom: 20px;
   width: 100%;
+  border-collapse: collapse;
 }
 
-/* Estilos personalizados para los encabezados de la tabla */
+.table th,
+.table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  white-space: nowrap; /* Prevent line breaks for other cells */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left; /* Align text to the left */
+}
+
 .table th {
-  background-color: #4a69bd; /* Un azul más oscuro que el azul oscuro por defecto */
+  background-color: #4a69bd;
   color: white;
+  text-align: left;
 }
 
-/* Estilos para botones dentro de la tabla para una mejor visualización */
-.table .btn {
-  margin: 2px; /* Asegura un pequeño espacio entre botones */
+.table td.description-cell {
+  white-space: normal; /* Allow line breaks for description */
+  word-wrap: break-word; /* Ensure long words break */
 }
 
-/* Estilos para mejorar la visibilidad y el contraste del modal de confirmación */
-.modal-content {
-  background-color: #f8f9fa; /* Un fondo más claro para el modal */
+.search-container, .items-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-.modal-header {
-  background-color: #6c7ae0; /* Un color de fondo distinto para la cabecera del modal */
-  color: white;
+.search-bar {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #4a69bd;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.modal-footer {
-  padding: 10px 20px; /* Ajusta el padding del pie del modal para mayor consistencia */
+.search-bar:focus {
+  outline: none;
+  border-color: #16222a;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-/* Estilos para el spinner */
+.items-per-page {
+  width: 100%;
+  max-width: 150px;
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #4a69bd;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.items-per-page:focus {
+  outline: none;
+  border-color: #16222a;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.form-label {
+  margin-bottom: 5px;
+}
+
 .spinner-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 300px; /* Ajusta el tamaño mínimo del contenedor del spinner */
+  min-height: 300px;
 }
 
 .spinner-content {

@@ -9,31 +9,41 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
+import { FormsModule } from '@angular/forms';
+import { GeneralFunctions } from '../../../../assets/ts-scripts/general-functions';
 
 @Component({
   selector: 'app-virtual-library-list',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NgxPaginationModule, RouterModule, NgxSpinnerModule],
+  imports: [CommonModule, ReactiveFormsModule, NgxPaginationModule, RouterModule, NgxSpinnerModule, FormsModule],
   templateUrl: './virtual-library-list.component.html',
-  styleUrl: './virtual-library-list.component.css'
+  styleUrls: ['./virtual-library-list.component.css']
 })
 export class VirtualLibraryListComponent {
   page: number = 1;
   recordList: VirtualLibraryModel[] = [];
+  filteredRecordList: VirtualLibraryModel[] = [];
   itemsPageAmount: number = FormsConfig.ITEMS_PER_PAGE;
   isLoading: boolean = true;
+  searchTerm: string = '';
 
   constructor(private service: VirtualLibraryService,
-    private spinner: NgxSpinnerService) { }
+              private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.spinner.show();
     this.getRecordList();
   }
+
+  ngOnChanges(): void {
+    this.filterRecords();
+  }
+
   getRecordList() {
     this.service.getAllRecords().subscribe(
       records => {
         this.recordList = records;
+        this.filteredRecordList = records;
         this.isLoading = false;
         this.spinner.hide();
       },
@@ -47,5 +57,22 @@ export class VirtualLibraryListComponent {
         });
       }
     );
+  }
+
+  filterRecords() {
+    const term = this.searchTerm.toLowerCase();
+    this.filteredRecordList = this.recordList.filter(doc => 
+      (doc.name?.toLowerCase().includes(term) || '') ||
+      (doc.description?.toLowerCase().includes(term) || '') ||
+      (GeneralFunctions.formatDate(doc.createdAt).includes(term))
+    );
+  }
+
+  updateItemsPerPage() {
+    if (!this.itemsPageAmount || this.itemsPageAmount <= 0) {
+      this.itemsPageAmount = FormsConfig.ITEMS_PER_PAGE;
+    }
+    this.page = 1;
+    this.filterRecords();
   }
 }

@@ -71,8 +71,8 @@
             <div class="input-box">
                 <label for="isActive">Activo</label>
                 <select class="form-control" formControlName="isActive" id="isActive">
-                    <option [ngValue]="true">true</option>
-                    <option [ngValue]="false">false</option>
+                    <option [ngValue]="true">Verdadero</option>
+                    <option [ngValue]="false">Falso</option>
                 </select>
                 <div class="warning-validator"
                     *ngIf="fgv['isActive'].errors && (fgv['isActive'].dirty || fgv['isActive'].touched)">

@@ -9,24 +9,31 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import * as bootstrap from 'bootstrap'; // Import Bootstrap
+import { GeneralFunctions } from '../../../../assets/ts-scripts/general-functions';
+import { FormsModule } from '@angular/forms';
+
+declare var $: any;
 
 @Component({
   selector: 'app-practice-offer-list-admin',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NgxPaginationModule, RouterModule, NgxSpinnerModule],
+  imports: [CommonModule, ReactiveFormsModule, NgxPaginationModule, RouterModule, NgxSpinnerModule, FormsModule],
   templateUrl: './practice-offer-list-admin.component.html',
   styleUrls: ['./practice-offer-list-admin.component.css']
 })
 export class PracticeOfferListAdminComponent implements OnInit {
   page: number = 1;
   recordList: PracticeOfferAdminModel[] = [];
+  filteredRecordList: PracticeOfferAdminModel[] = [];
   deleteRecordId!: string;
+  changeStateRecordId!: string;
+  changeCurrentState!: boolean;
   itemsPageAmount: number = FormsConfig.ITEMS_PER_PAGE;
   isLoading: boolean = true;
+  searchTerm: string = '';
 
   constructor(private service: PracticeOfferAdminService,
-              private spinner: NgxSpinnerService) { }
+    private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.spinner.show();
@@ -37,6 +44,7 @@ export class PracticeOfferListAdminComponent implements OnInit {
     this.service.getAllRecords().subscribe(
       records => {
         this.recordList = records;
+        this.filteredRecordList = records;
         this.isLoading = false;
         this.spinner.hide();
       },
@@ -55,8 +63,7 @@ export class PracticeOfferListAdminComponent implements OnInit {
   RemoveRecordConfirmation(recordId: string | undefined) {
     if (recordId) {
       this.deleteRecordId = recordId;
-      const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal')!);
-      deleteModal.show();
+      this.openQuestionModal("deleteModal");
     } else {
       console.error('El id del registro es undefined');
     }
@@ -65,6 +72,7 @@ export class PracticeOfferListAdminComponent implements OnInit {
   RemoveRecord() {
     this.service.removeRecord(this.deleteRecordId).subscribe(
       response => {
+        this.closeQuestionModal("deleteModal");
         Swal.fire({
           icon: 'success',
           title: 'Exitoso',
@@ -73,6 +81,7 @@ export class PracticeOfferListAdminComponent implements OnInit {
         this.getRecordList();
       },
       error => {
+        this.closeQuestionModal("deleteModal");
         Swal.fire({
           icon: 'error',
           title: 'Error',
@@ -80,5 +89,73 @@ export class PracticeOfferListAdminComponent implements OnInit {
         });
       }
     );
+  }
+
+  ChangeStateConfirmation(recordId: string | undefined, currentState: boolean | undefined) {
+    if (recordId) {
+      this.changeStateRecordId = recordId;
+      this.changeCurrentState = currentState ?? false;
+      this.openQuestionModal('changeStateModal');
+    } else {
+      console.error('El id del registro es undefined');
+    }
+  }
+
+  ChangeState() {
+    const model = {
+      id: this.changeStateRecordId,
+      isActive: !this.changeCurrentState
+    };
+
+    this.service.editRecord(model).subscribe(
+      response => {
+        this.closeQuestionModal('changeStateModal');
+        Swal.fire({
+          icon: 'success',
+          title: 'Exitoso',
+          text: 'El registro ha cambiado de estado correctamente.'
+        });
+        this.getRecordList();
+      },
+      error => {
+        this.closeQuestionModal('changeStateModal');
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Error cambiando de estado el registro.'
+        });
+      }
+    );
+  }
+
+  filterRecords() {
+    const term = this.searchTerm.toLowerCase();
+    this.filteredRecordList = this.recordList.filter(doc => 
+      (doc.career?.toLowerCase().includes(term) || '') ||
+      (doc.faculty?.toLowerCase().includes(term) || '') ||
+      (doc.description?.toLowerCase().includes(term) || '') ||
+      (GeneralFunctions.formatDate(doc.createdAt).includes(term)) ||
+      (doc.year?.toString().includes(term) || '')
+    );
+  }
+
+  getTextState(isActive: boolean | undefined): string {
+    return GeneralFunctions.getTextState(isActive ?? false);
+  }
+
+  openQuestionModal(modalId: string) {
+    $(`#${modalId}`).modal('show');
+  }
+
+  closeQuestionModal(modalId: string) {
+    $(`#${modalId}`).modal('hide');
+  }
+
+  updateItemsPerPage() {
+    if (!this.itemsPageAmount || this.itemsPageAmount <= 0) {
+      this.itemsPageAmount = FormsConfig.ITEMS_PER_PAGE;
+    }
+    this.page = 1;
+    this.filterRecords();
   }
 }

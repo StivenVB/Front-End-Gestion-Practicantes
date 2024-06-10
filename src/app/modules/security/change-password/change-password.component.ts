@@ -45,7 +45,7 @@ export class ChangePasswordComponent {
 
   FormBuilding() {
     this.fgValidator = this.fb.group({
-      token: [],
+      token: ['',Validators.required],
       newPassword: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', [Validators.required, matchValidator('newPassword')]]
     });
@@ -88,10 +88,8 @@ export class ChangePasswordComponent {
    * Build a model instance to send it
    */
   getChangePasswordData(): ChangePasswordModel {
-    let currentSession = localStorage.getItem('session') ?? "";
-    let token = JSON.parse(currentSession).token;
     let model = new ChangePasswordModel();
-    model.token = token;
+    model.token = this.fgv['token'].value.toString();
     model.newPassword = this.fgv['newPassword'].value.toString();
     console.log(model);
     return model;

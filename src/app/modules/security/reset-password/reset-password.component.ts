@@ -56,9 +56,9 @@ export class ResetPasswordComponent implements OnInit {
           Swal.fire({
             icon: 'success',
             title: 'Exitoso',
-            text: 'Su contraseña ha sido restablecida, verifique su bandeja de entrada de correo electrónico.'
+            text: 'Verifique su bandeja de entrada de correo electrónico, se ha enviado un token para generar su nueva contraseña.'
           });
-          this.router.navigate(["/security/login"]);
+          this.router.navigate(["/security/change-password"]);
         },
         err => {
           this.isLoading = false;

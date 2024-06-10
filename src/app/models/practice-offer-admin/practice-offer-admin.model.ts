@@ -7,6 +7,6 @@ export class PracticeOfferAdminModel {
     description?: String;
     year?: number;
     semester?: number;
-    endDate?: String;
+    endDate?: Date;
     career?: String;
 }

@@ -5,68 +5,100 @@
     <br>
     <a class="btn btn-success" routerLink="/practice-offer-admin/creation" role="button">Nuevo Registro</a>
     <br /><br />
+    <div class="d-flex mb-3 justify-content-between align-items-end">
+      <div class="search-container">
+        <label for="search-input" class="form-label">Buscador</label>
+        <input id="search-input" type="text" placeholder="Buscar..." [(ngModel)]="searchTerm" (ngModelChange)="filterRecords()" class="form-control search-bar" />
+      </div>
+      <div class="items-page-container">
+        <label for="items-page-input" class="form-label">Items por página</label>
+        <input id="items-page-input" type="number" [(ngModel)]="itemsPageAmount" (ngModelChange)="updateItemsPerPage()" class="form-control items-per-page" placeholder="Items por página" />
+      </div>
+    </div>
     <div class="spinner-container" *ngIf="isLoading">
       <div class="spinner-content">
-        <div class="spinner-border text-primary" role="status">
-        </div>
+        <div class="spinner-border text-primary" role="status"></div>
       </div>
     </div>
     <div *ngIf="!isLoading" class="table-responsive">
-      <table class="table">
+      <table class="table table-bordered">
         <thead class="table-dark">
           <tr>
-            <th>Facultad</th>
-            <th>Programa</th>
-            <th>Descripción</th>
-            <th>Fecha Inicio</th>
-            <th>Fecha Fin</th>
-            <th>Año</th>
-            <th>Semestre</th>
-            <th>Activo</th>
-            <th>Fecha Creación</th>
-            <th>Editar</th>
-            <th>Eliminar</th>
+            <th style="width: 120px;">Facultad</th>
+            <th style="width: 120px;">Programa</th>
+            <th style="width: 300px;">Descripción</th>
+            <th style="width: 130px;">Fecha Inicio</th>
+            <th style="width: 130px;">Fecha Fin</th>
+            <th style="width: 80px;">Año</th>
+            <th style="width: 100px;">Semestre</th>
+            <th style="width: 130px;">Fecha Creación</th>
+            <th style="width: 100px;">Activo</th>
+            <th style="width: 100px;">Editar</th>
+            <th style="width: 100px;">Estado</th>
+            <th style="width: 100px;">Eliminar</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let r of recordList | paginate: { itemsPerPage: itemsPageAmount, currentPage: page }">
+          <tr *ngFor="let r of filteredRecordList | paginate: { itemsPerPage: itemsPageAmount, currentPage: page }">
             <td>{{ r.faculty }}</td>
             <td>{{ r.career }}</td>
-            <td>{{ r.description }}</td>
-            <td>{{ r.startDate }}</td>
-            <td>{{ r.endDate }}</td>
+            <td class="description-cell">{{ r.description }}</td>
+            <td>{{ r.startDate | date: 'yyyy-MM-dd' }}</td>
+            <td>{{ r.endDate | date: 'yyyy-MM-dd' }}</td>
             <td>{{ r.year }}</td>
             <td>{{ r.semester }}</td>
-            <td>{{ r.isActive }}</td>
-            <td>{{ r.createdAt }}</td>
+            <td>{{ r.createdAt | date: 'yyyy-MM-dd' }}</td>
+            <td>{{ getTextState(r.isActive) }}</td>
             <td>
-              <button type="button"  class="btn btn-warning" [routerLink]="['/practice-offer-admin/edition', r.id]">Editar</button>
+              <button type="button" class="btn btn-warning" [routerLink]="['/practice-offer-admin/edition', r.id]">Editar</button>
+            </td>
+            <td>
+              <button type="button" class="btn btn-primary" (click)="ChangeStateConfirmation(r.id, r.isActive)">Cambiar</button>
             </td>
             <td>
               <button type="button" class="btn btn-danger" (click)="RemoveRecordConfirmation(r.id)">Eliminar</button>
-          </td>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+    <pagination-controls previousLabel="Anterior" nextLabel="Siguiente" (pageChange)="page = $event"></pagination-controls>
+  </div>
+</div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="deleteModalLabel">Confirmación eliminación de registro</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            ¿Está seguro en eliminar el registro seleccionado?
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-primary" (click)="RemoveRecord()">Aceptar</button>
-          </div>
-        </div>
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="deleteModalLabel">Confirmación eliminación de registro</h1>
+        <button type="button" class="btn-close" (click)="closeQuestionModal('deleteModal')" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ¿Está seguro en eliminar el registro seleccionado?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeQuestionModal('deleteModal')">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="RemoveRecord()">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ChangeState Modal -->
+<div class="modal fade" id="changeStateModal" tabindex="-1" aria-labelledby="changeStateModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="changeStateModalLabel">Confirmación actualización estado registro</h1>
+        <button type="button" class="btn-close" (click)="closeQuestionModal('changeStateModal')" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ¿Está seguro en actualizar el estado del registro seleccionado?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeQuestionModal('changeStateModal')">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="ChangeState()">Aceptar</button>
       </div>
     </div>
   </div>

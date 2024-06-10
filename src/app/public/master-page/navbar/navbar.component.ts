@@ -13,7 +13,7 @@ import { RouterModule } from '@angular/router';
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   isLogged: Boolean = false;
-  role: number = 1;
+  role: number = 0;
   navbarOpen: boolean = false;
 
   private subscription!: Subscription;
@@ -31,5 +31,3 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 }
-
-

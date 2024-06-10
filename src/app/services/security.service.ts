@@ -59,7 +59,6 @@ export class SecurityService {
   ChangePassword(model: ChangePasswordModel): Observable<Boolean> {
     return this.http.post<Boolean>(`${ServiceConfig.BASE_URL}auth/reset-password`, model, {
       headers: new HttpHeaders({
-        Authorization: `Bearer ${this.getToken()}`
       })
     })
   }
@@ -78,10 +77,10 @@ export class SecurityService {
     } else {
       sessionData.isLogged = true;
       let data: UserModel = {
-        //username: sessionData.data.username,
+        username: sessionData.user.username,
         token: sessionData.access_token,
         isLogged: true,
-       // role: sessionData.data.role
+        role: sessionData.user.role
       };
       localStorage.setItem('session', JSON.stringify(data));
       this.setUserData(data);
@@ -89,12 +88,9 @@ export class SecurityService {
     }
   }
 
-  /**
-   * Return data of session
-   */
   getSession() {
     let currentSession = localStorage.getItem('session');
-    console.log(currentSession);
+    console.log("pruebas" + currentSession);
     return currentSession;
   }
 

@@ -1,5 +1,6 @@
 export class VirtualLibraryModel {
-    createdAt?: string;
-    description?: String;
-    url?: String;
+    name?: string;
+    createdAt?: Date;
+    description?: string;
+    url?: string;
 }
