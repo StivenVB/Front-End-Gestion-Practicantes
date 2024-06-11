@@ -7,4 +7,6 @@ export class UserRegisterModel{
     educationalInstitution?: String;
     password?: String;
     roleId?: number;
+    faculty?: String;
+    career?: String;
 }

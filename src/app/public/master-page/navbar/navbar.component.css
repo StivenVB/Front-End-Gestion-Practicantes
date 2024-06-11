@@ -39,6 +39,9 @@
     padding-left: 1rem; /* Left padding */
    
 }
+.navbar-toggler-icon .fas {
+    color: white;
+  }
 
 /* Responsive adjustments */
 @media (max-width: 991px) {
