@@ -9,8 +9,4 @@ export class GeneralFunctions {
       const day = ('0' + d.getDate()).slice(-2);
       return `${year}-${month}-${day}`;
     }
-
-    static getTextState(isActive: boolean): string {
-      return isActive ? 'Verdadero' : 'Falso';
-    }
   }

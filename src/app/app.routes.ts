@@ -24,6 +24,10 @@ export const routes: Routes = [
         loadChildren: () => import('./modules/practice-offer-admin/practice-offer-admin.module').then(m => m.PracticeOfferAdminModule)
     },
     {
+        path: 'users-admin',
+        loadChildren: () => import('./modules/users-admin/users-admin.module').then(m => m.UsersAdminModule)
+    },
+    {
         path: 'virtual-library',
         loadChildren: () => import('./modules/virtual-library/virtual-library.module').then(m => m.VirtualLibraryModule)
     },
