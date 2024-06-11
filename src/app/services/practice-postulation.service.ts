@@ -20,6 +20,23 @@ export class PracticePostulationService {
     });
   }
 
+  UpdatePracticePostulation(model: PracticePostulationModel): Observable<PracticePostulationModel> {
+    return this.http.patch<PracticePostulationModel>(`${ServiceConfig.BASE_URL}practice-postulation/${model.id}`, model, {
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${this.secService.getToken()}`
+      })
+    });
+  }
+
+  GetPracticePostulations(): Observable<PracticePostulationModel[]> {
+    return this.http.get<PracticePostulationModel[]>(`${ServiceConfig.BASE_URL}practice-postulation`,
+    {
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${this.secService.getToken()}`
+      })
+    });
+  }
+
   GetPracticePostulationsByUser(): Observable<PracticePostulationModel[]> {
     return this.http.get<PracticePostulationModel[]>(`${ServiceConfig.BASE_URL}practice-postulation/user/${this.secService.getUserId()}`,
     {

@@ -28,6 +28,14 @@ export const routes: Routes = [
         loadChildren: () => import('./modules/practice-postulation/practice-postulation.module').then(m => m.PracticePostulationModule)
     },
     {
+        path: 'upload-files',
+        loadChildren: () => import('./modules/upload-files/upload-files.module').then(m => m.UploadFilesModule)
+    },
+    {
+        path: 'admin',
+        loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)
+    },
+    {
         path: '**',
         redirectTo: '/home'
     }

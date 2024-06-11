@@ -1,0 +1,26 @@
+.table-responsive {
+    overflow-x: auto;
+}
+
+.table {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+}
+
+.table th {
+    background-color: #4a69bd;
+    color: white;
+    text-align: left;
+}

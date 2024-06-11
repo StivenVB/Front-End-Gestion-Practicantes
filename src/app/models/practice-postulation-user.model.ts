@@ -1,4 +1,5 @@
 export class PracticePostulationUserModel{
+    postulationId?: number;
     faculty?: String;
     description?: String;
     year?: number;

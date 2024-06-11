@@ -10,13 +10,15 @@ import { PracticePostulationModel } from '../../../models/practice-postulation.m
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { UrlRepositoryService } from '../../../services/url-repository.service';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 declare var $:any;
 
 @Component({
   selector: 'app-practice-offers-list',
   standalone: true,
-  imports: [NgFor, NgClass, NgIf, CommonModule, ReactiveFormsModule, FontAwesomeModule],
+  imports: [NgFor, NgClass, NgIf, CommonModule, ReactiveFormsModule, FontAwesomeModule, NgxPaginationModule],
   templateUrl: './practice-offers-list.component.html',
   styleUrl: './practice-offers-list.component.css'
 })
@@ -33,11 +35,14 @@ export class PracticeOffersListComponent implements OnInit {
   practiceOffer: PracticeOfferModel = new PracticeOfferModel;
   files: File[] = [];
   faXmark: any = faXmark;
+  p: number = 1;
+  applyOffer: boolean = true;
 
   constructor(
     private practiceOfferService: ParacticeOfferService,
     private securityService: SecurityService,
     private practicePostulationService: PracticePostulationService,
+    private urlRepositoryService: UrlRepositoryService,
     private router: Router,
     private fb: FormBuilder,
   ) { }
@@ -81,6 +86,7 @@ export class PracticeOffersListComponent implements OnInit {
         data => {
           console.log(data);
           this.practicePostulationList = data;
+          this.applyOffer = this.practicePostulationList.length > 0 ? false : true;
         },
         error => {
           console.log(error);
@@ -116,11 +122,13 @@ export class PracticeOffersListComponent implements OnInit {
         status: "Postulación Enviada",
         userId: parseInt(this.securityService.getUserId().toString()),
         practiceOfferId: practiceOfferId,
-        formData: this.fgValidator.value
+        formData: this.fgValidator.value,
+        urls: []
       };
 
       this.practicePostulationService.SavePracticePostulation(practicePostulation).subscribe(
         data => {
+          console.log(data);
           this.loadingPostulation = false;
           Swal.fire({
             icon: 'success',
@@ -128,6 +136,7 @@ export class PracticeOffersListComponent implements OnInit {
             text: 'Postulación realizada correctamente.'
           });
           $('#modalQuestion').modal('hide');
+          this.uploadFilesServer(data.id);
           this.LoadPracticePostulations();
           this.LoadPracticeOffers();
         },
@@ -199,14 +208,35 @@ export class PracticeOffersListComponent implements OnInit {
     this.files.splice(index, 1);
   }
 
-  uploadFiles() {
-    // Aquí puedes implementar la lógica para cargar los archivos al servidor
+  uploadFilesServer(postulationId: number | undefined) {
     console.log('Uploading files:', this.files);
-    // Ejemplo de carga de archivos al servidor:
-    // const formData = new FormData();
-    // this.files.forEach(file => formData.append('files', file, file.name));
-    // this.http.post('your-upload-endpoint', formData).subscribe(response => {
-    //   console.log('Files uploaded successfully:', response);
-    // });
+
+    if (postulationId) {
+      for (let file of this.files) {
+        var formData: FormData = new FormData();
+        formData.append("name", file.name);
+        formData.append("description", file.name);
+        formData.append("file", file, file.name);
+        formData.append("relateId", postulationId.toString());
+        formData.append("relatedTable", "practicepostulation");
+
+        formData.forEach((value, key) => {
+          console.log(`${key}: ${value}`);
+        });
+
+        this.urlRepositoryService.UploadFile(formData).subscribe(
+          data => {
+            console.log(data);
+          },
+          error => {
+            console.error('Error uploading file:', error);
+          }
+        );
+      }
+    }
+  }
+
+  handlePageSizeChange(event: any): void {
+    this.p = event;
   }
 }

@@ -5,4 +5,5 @@ export class UserModel{
     isLogged: Boolean = false;
     token?: String;
     id?: number;
+    name?: String;
 }

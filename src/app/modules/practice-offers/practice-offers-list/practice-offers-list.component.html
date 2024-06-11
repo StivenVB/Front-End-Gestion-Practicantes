@@ -6,17 +6,22 @@
 
 <div class="row">
     <div class="col-md-6 col-sm-12" *ngIf="!loading">
-        <div class="card" *ngFor="let practiceOffer of practiceOfferList; index as i;"
+        <div class="card"
+            *ngFor="let practiceOffer of (practiceOfferList | paginate: { itemsPerPage: 3, currentPage: p }); index as i"
             (click)="viewPracticeOffer(practiceOffer, i)" [ngClass]="{'selectedCard': selectedIndex == i}">
             <div class="card-body">
                 <h5 class="card-title">{{ practiceOffer.faculty }}</h5>
                 <p class="card-text">{{ practiceOffer.description }}</p>
-                <button (click)="openQuestionModal()" class="btn btn-primary"
-                    *ngIf="!IsApplyPostulation(practiceOffer.id)">Postularme</button>
-                <p class="card-text" *ngIf="IsApplyPostulation(practiceOffer.id)"><strong>Ya aplicaste a esta
-                        oferta</strong></p>
+                <button (click)="openQuestionModal()" class="btn btn-primary" [disabled]="!applyOffer">Postularme</button>
+                <!-- <p class="card-text" *ngIf="IsApplyPostulation(practiceOffer.id)"><strong>Ya aplicaste a esta
+                        oferta</strong></p> -->
             </div>
         </div>
+        <pagination-controls
+            previousLabel="Anterior"
+            nextLabel="Siguiente"
+            (pageChange)="handlePageSizeChange($event)">
+        </pagination-controls>
     </div>
     <div class="col-md-6 col-sm-12 d-flex justify-content-center" *ngIf="loading">
         <div class="spinner-border" style="width: 5rem; height: 5rem; margin-bottom: 3%;" role="status">
@@ -38,38 +43,48 @@
                 <button type="button" class="btn-close" (click)="closeQuestionModal()" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form [formGroup]="fgValidator" class="registration-form" *ngIf="loadedForm && practiceOffer.formSchema">
+                <form [formGroup]="fgValidator" class="registration-form"
+                    *ngIf="loadedForm && practiceOffer.formSchema">
                     <!-- Campo para el código -->
                     <div class="input-field full-width" *ngFor="let question of practiceOffer.formSchema?.fields">
-                        <label [for]="question.name.toString()" class="form-label">{{ question.label.toString() }}</label>
-                        <input *ngIf="question.type != 'select'" [type]="question.type" class="form-control" [id]="question.name.toString()" [formControlName]="question.name.toString()" [placeholder]="question.label.toString()">
-                        <select class="form-select" aria-label="Default select example" [formControlName]="question.name.toString()" *ngIf="question.type == 'select'">
+                        <label [for]="question.name.toString()" class="form-label">{{ question.label.toString()
+                            }}</label>
+                        <input *ngIf="question.type != 'select'" [type]="question.type" class="form-control"
+                            [id]="question.name.toString()" [formControlName]="question.name.toString()"
+                            [placeholder]="question.label.toString()">
+                        <select class="form-select" aria-label="Default select example"
+                            [formControlName]="question.name.toString()" *ngIf="question.type == 'select'">
                             <option value="" selected>Seleccione una opci&oacute;n</option>
-                            <option *ngFor="let option of question.options" [value]="option.value?.toString()">{{ option.label }}</option>
-                          </select>
-                        <div class="warning-validator" *ngIf="fgv[question.name.toString()]?.errors && (fgv[question.name.toString()]?.dirty || fgv[question.name.toString()]?.touched)">
-                            <strong *ngIf="fgv[question.name.toString()].errors?.['required']">Este campo es obligatorio.</strong>
+                            <option *ngFor="let option of question.options" [value]="option.value?.toString()">{{
+                                option.label }}</option>
+                        </select>
+                        <div class="warning-validator"
+                            *ngIf="fgv[question.name.toString()]?.errors && (fgv[question.name.toString()]?.dirty || fgv[question.name.toString()]?.touched)">
+                            <strong *ngIf="fgv[question.name.toString()].errors?.['required']">Este campo es
+                                obligatorio.</strong>
                         </div>
                     </div>
                     <div class="file-upload-container" style="margin-top: 4%;">
-                        <input #fileInput type="file" id="ipLoadFile" (change)="onFileSelected($event)" accept=".pdf, .docx" style="display: none;" multiple />
+                        <input #fileInput type="file" id="ipLoadFile" (change)="onFileSelected($event)"
+                            accept=".pdf, .docx" style="display: none;" multiple />
                         <button (click)="uploadFile()" class="btn btn-primary">Cargar Archivo</button>
                         <table *ngIf="files.length > 0" class="table" style="margin-top: 4%;">
                             <thead>
-                              <tr>
-                                <th scope="col">Nombre del archivo</th>
-                                <th scope="col">Acci&oacute;n</th>
-                              </tr>
+                                <tr>
+                                    <th scope="col">Nombre del archivo</th>
+                                    <th scope="col">Acci&oacute;n</th>
+                                </tr>
                             </thead>
                             <tbody>
-                              <tr *ngFor="let file of files; let i = index">
-                                <td>{{ file.name }}</td>
-                                <td><button (click)="removeFile(i)" class="btn btn-danger btn-sm"><fa-icon [icon]="faXmark"></fa-icon></button></td>
-                              </tr>
+                                <tr *ngFor="let file of files; let i = index">
+                                    <td>{{ file.name }}</td>
+                                    <td><button (click)="removeFile(i)" class="btn btn-danger btn-sm"><fa-icon
+                                                [icon]="faXmark"></fa-icon></button></td>
+                                </tr>
                             </tbody>
-                          </table>
+                        </table>
                         <!-- <button (click)="uploadFiles()">Upload</button> -->
-                      </div>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -78,7 +93,9 @@
                     <div class="spinner-border" style="width: 2rem; height: 2rem; margin-bottom: 3%;" role="status">
                     </div>
                 </div>
-                <button type="button" class="btn btn-primary" (click)="ApplyPostulation(practiceOffer.id)" *ngIf="!loadingPostulation" [disabled]="loadedForm && !fgValidator.valid">Enviar Postulaci&oacute;n</button>
+                <button type="button" class="btn btn-primary" (click)="ApplyPostulation(practiceOffer.id)"
+                    *ngIf="!loadingPostulation" [disabled]="loadedForm && !fgValidator.valid">Enviar
+                    Postulaci&oacute;n</button>
             </div>
         </div>
     </div>

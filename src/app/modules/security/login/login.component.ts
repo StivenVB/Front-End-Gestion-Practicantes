@@ -49,6 +49,7 @@ export class LoginComponent implements OnInit {
       let model = this.getLoginData();
       this.service.LoginUser(model).subscribe(
         data => {
+          console.log(data);
           Swal.fire({
             icon: 'success',
             title: 'Success',
