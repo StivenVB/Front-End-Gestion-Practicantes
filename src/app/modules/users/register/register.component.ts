@@ -5,6 +5,8 @@ import { UserRegisterService } from '../../../services/user-register.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 const matchValidator = (matchTo: string): ValidatorFn => {
@@ -22,18 +24,19 @@ const matchValidator = (matchTo: string): ValidatorFn => {
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, NgxSpinnerModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
-export class RegisterComponent implements OnInit{
+export class RegisterComponent implements OnInit {
   fgValidator!: FormGroup;
-
+  isLoading: boolean = false;
   constructor(
     private fb: FormBuilder,
     private service: UserRegisterService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit(): void {
@@ -49,51 +52,57 @@ export class RegisterComponent implements OnInit{
       phone: ['', [Validators.required, Validators.minLength(10), Validators.pattern(/^[0-9]+$/)]],
       educationalInstitution: ['', [Validators.required, Validators.minLength(8)]],
       password: ['', [Validators.required, Validators.minLength(8)]],
-      confirmPassword: ['', [Validators.required, matchValidator('password')]]
+      confirmPassword: ['', [Validators.required, matchValidator('password')]],
+      faculty: [''],
+      career: ['']
     });
   }
 
   UserRegister() {
     if (this.fgValidator.invalid) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Formulario inválido'
-        });
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Formulario inválido'
+      });
     } else {
-        let model = this.getUserRegisterData();
-        console.log(model);
-        this.service.UserRegister(model).subscribe(
-            data => {
-                console.log(JSON.stringify(data));
-                if (data) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Success',
-                        text: 'Registration has been successful. You can find the password in your mail inbox.'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            this.router.navigate(['/security/login']);
-                        }
-                    });
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Error registering data.'
-                    });
-                }
-            },
-            error => {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Error registering data.'
-                });
-            }
-        );
+      this.isLoading = true;
+      this.spinner.show();
+      let model = this.getUserRegisterData();
+      this.service.UserRegister(model).subscribe(
+        data => {
+          console.log(JSON.stringify(data));
+          if (data) {
+            this.isLoading = false;
+            Swal.fire({
+              icon: 'success',
+              title: 'Exitoso',
+              text: 'Registro exitoso'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.router.navigate(['/security/login']);
+              }
+            });
+          } else {
+            this.isLoading = false;
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Error al registrar datos.'
+            });
+          }
+        },
+        error => {
+          this.isLoading = false;
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Error al registrar datos.'
+          });
+        }
+      );
     }
-}
+  }
 
   /**
    * Build a model instance to send it
@@ -107,7 +116,10 @@ export class RegisterComponent implements OnInit{
     model.phone = this.fgv["phone"].value;
     model.educationalInstitution = this.fgv["educationalInstitution"].value;
     model.password = this.fgv["password"].value;
+    model.faculty = this.fgv["faculty"].value;
+    model.career = this.fgv["career"].value;
     model.roleId = 2;
+    console.log(model)
     return model;
   }
 

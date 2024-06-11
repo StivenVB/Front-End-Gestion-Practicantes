@@ -1,0 +1,107 @@
+/* styles.css */
+.practice-offer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #3a6073, #16222a);
+    padding: 50px 0; /* Espacio superior e inferior */
+  }
+  
+  .practice-offer-box {
+    background: white;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .practice-offer-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  }
+  
+  h2 {
+    font-size: 24px;
+    margin-bottom: 30px;
+    color: #333;
+  }
+  
+  .input-box {
+    margin-bottom: 20px;
+    position: relative;
+    text-align: left;
+  }
+  
+  .input-box label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .input-box input {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+  }
+  
+  .input-box input:focus {
+    border-color: #3a6073;
+  }
+  
+  .warning-validator {
+    color: red;
+    font-size: 12px;
+    text-align: left;
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    width: 100%;
+  }
+  
+  .submit-btn {
+    background-color: #3a6073;
+    color: white;
+    border: none;
+    padding: 15px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s;
+  }
+  
+  .submit-btn:hover {
+    background-color: #16222a;
+  }
+  
+  .btn-warning {
+    background-color: #ffc107;
+    color: white;
+    border: none;
+    padding: 15px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+  }
+  
+  .btn-warning:hover {
+    background-color: #e0a800;
+  }
+  
+  .avatar img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }

@@ -1,0 +1,118 @@
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
+<div class="user-container">
+    <div class="user-box">
+        <div class="avatar">
+            <img src="/assets/images/editar.png" alt="User Icon" />
+        </div>
+        <h2>Editar Usuario</h2>
+        <br>
+        <div class="spinner-container" *ngIf="isLoading">
+            <div class="spinner-content">
+                <div class="spinner-border text-primary" role="status">
+                </div>
+            </div>
+        </div>
+        <form [formGroup]="fgValidator">
+            <input type="hidden" formControlName="id" />
+
+            <div class="input-box">
+                <label for="name">Nombre</label>
+                <input formControlName="name" id="name" name="name" class="form-control" type="text"
+                    placeholder="Nombre">
+                <div class="warning-validator" *ngIf="fgv['name'].errors && (fgv['name'].dirty || fgv['name'].touched)">
+                    <strong *ngIf="fgv['name'].errors['required']">
+                        El campo es requerido.
+                    </strong>
+                </div>
+            </div>
+
+            <div class="input-box">
+                <label for="lastName">Apellidos</label>
+                <input formControlName="lastName" id="lastName" name="lastName" class="form-control" type="text"
+                    placeholder="Apellidos">
+                <div class="warning-validator"
+                    *ngIf="fgv['lastName'].errors && (fgv['lastName'].dirty || fgv['lastName'].touched)">
+                    <strong *ngIf="fgv['lastName'].errors['required']">
+                        El campo es requerido.
+                    </strong>
+                </div>
+            </div>
+
+            <div class="input-box">
+                <label for="identification">Identificación</label>
+                <input formControlName="identification" id="identification" name="identification" class="form-control"
+                    type="text" placeholder="Identificación">
+                <div class="warning-validator"
+                    *ngIf="fgv['identification'].errors && (fgv['identification'].dirty || fgv['identification'].touched)">
+                    <strong *ngIf="fgv['identification'].errors['required']">
+                        El campo es requerido.
+                    </strong>
+                </div>
+            </div>
+
+            <div class="input-box">
+                <label for="username">Correo Electrónico</label>
+                <input formControlName="username" id="username" name="username" class="form-control" type="text"
+                    placeholder="Correo Electrónico">
+                <div class="warning-validator"
+                    *ngIf="fgv['username'].errors && (fgv['username'].dirty || fgv['username'].touched)">
+                    <strong *ngIf="fgv['username'].errors['required']">
+                        El campo es requerido.
+                    </strong>
+                </div>
+            </div>
+
+            <div class="input-box">
+                <label for="phone">Teléfono</label>
+                <input formControlName="phone" id="phone" name="phone" class="form-control" type="text"
+                    placeholder="Teléfono">
+                <div class="warning-validator"
+                    *ngIf="fgv['phone'].errors && (fgv['phone'].dirty || fgv['phone'].touched)">
+                    <strong *ngIf="fgv['phone'].errors['required']">
+                        El campo es requerido.
+                    </strong>
+                </div>
+            </div>
+
+            <div class="input-box">
+                <label for="educationalInstitution">Institución Educativa</label>
+                <input formControlName="educationalInstitution" id="educationalInstitution"
+                    name="educationalInstitution" class="form-control" type="text" placeholder="Institución educativa">
+            </div>
+
+            <div class="input-box">
+                <label for="faculty">Facultad</label>
+                <input formControlName="faculty" id="faculty" name="faculty" class="form-control" type="text"
+                    placeholder="Facultad">
+            </div>
+
+            <div class="input-box">
+                <label for="career">Carrera</label>
+                <input formControlName="career" id="career" name="career" class="form-control" type="text"
+                    placeholder="Carrera">
+            </div>
+
+            <div class="input-box">
+                <label for="roleId">Rol</label>
+                <select class="form-control" formControlName="roleId" id="isActive">
+                    <option [ngValue]="1">Administrador</option>
+                    <option [ngValue]="2">Estudiante</option>
+                    <option [ngValue]="3">Asesor</option>
+                </select>
+                <div class="warning-validator"
+                    *ngIf="fgv['roleId'].errors && (fgv['roleId'].dirty || fgv['roleId'].touched)">
+                    <strong *ngIf="fgv['roleId'].errors['required']">
+                        El campo es requerido.
+                    </strong>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button type="button" (click)="editRecord()" class="submit-btn">Guardar</button>
+                <a class="btn btn-warning" routerLink="/users-admin/list" role="button">Cancelar</a>
+            </div>
+        </form>
+        <br>
+    </div>
+</div>

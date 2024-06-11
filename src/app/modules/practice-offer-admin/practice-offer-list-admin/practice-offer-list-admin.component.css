@@ -1,0 +1,131 @@
+.practice-offer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #3a6073, #16222a);
+  padding: 50px 0;
+}
+
+.practice-offer-box {
+  background: white;
+  padding: 30px 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 1200px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  overflow: hidden;
+}
+
+.practice-offer-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.table {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  white-space: nowrap; /* Prevent line breaks for other cells */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left; /* Align text to the left */
+}
+
+.table th {
+  background-color: #4a69bd;
+  color: white;
+  text-align: left;
+}
+
+.table td.description-cell {
+  white-space: normal; /* Allow line breaks for description */
+  word-wrap: break-word; /* Ensure long words break */
+}
+
+.search-container, .items-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.search-bar {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #4a69bd;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.search-bar:focus {
+  outline: none;
+  border-color: #16222a;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.items-per-page {
+  width: 100%;
+  max-width: 150px;
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #4a69bd;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.items-per-page:focus {
+  outline: none;
+  border-color: #16222a;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.form-label {
+  margin-bottom: 5px;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
+.spinner-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner-content .spinner-border {
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: 10px;
+}
+
+.spinner-content p {
+  font-size: 20px;
+  color: white;
+  margin: 0;
+}
