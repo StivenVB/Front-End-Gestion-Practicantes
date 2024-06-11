@@ -1,0 +1,92 @@
+<div class="text-center">
+    <h1>Postulaciones</h1>
+</div>
+
+<br />
+
+<div class="d-flex justify-content-center" *ngIf="loading">
+    <div class="spinner-border" style="width: 15rem; height: 15rem; margin-bottom: 3%; margin-top: 3%;" role="status">
+    </div>
+</div>
+
+<div class="row table-responsive" *ngIf="!loading">
+    <div class="col-md-12 col-sm-12">
+        <table class="table table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Facultad</th>
+                    <th>Postulante</th>
+                    <th>Semestre</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr
+                    *ngFor="let postulation of (practicePostulationList | paginate: { itemsPerPage: 8, currentPage: p }); index as i">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ postulation.offerfaculty }}</td>
+                    <td>{{ postulation.userfirstname }} {{ postulation.userlastname }}</td>
+                    <td>{{ postulation.offeryear }}-{{ postulation.offersemester }}</td>
+                    <td>{{ postulation.status }}</td>
+                    <td>
+                        <button type="button" class="btn btn-info" (click)="openModal(postulation)" title="Información sobre la postulación"><fa-icon [icon]="faInfo"></fa-icon></button>
+                        &nbsp;
+                        <div class="spinner-border" style="width: 1.3rem; height: 1.3rem;" role="status" *ngIf="loadingUpdate">
+                        </div>
+                        <button type="button" class="btn btn-success" title="Aceptar" (click)="acceptPostulation(postulation)" *ngIf="!loadingUpdate" [disabled]="postulation.status == 'Aceptada' || postulation.status == 'Rechazada'"><fa-icon [icon]="faCheck"></fa-icon></button>
+                        &nbsp;
+                        <button type="button" class="btn btn-danger" title="Rechazar" (click)="rejectPostulation(postulation)" *ngIf="!loadingUpdate" [disabled]="postulation.status == 'Aceptada' || postulation.status == 'Rechazada'"><fa-icon [icon]="faXmark"></fa-icon></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <pagination-controls previousLabel="Anterior" nextLabel="Siguiente" (pageChange)="handlePageSizeChange($event)">
+        </pagination-controls>
+    </div>
+</div>
+
+<div class="modal fade" id="modalPostulationInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Informaci&oacute;n del Postulado</h1>
+                <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <p><strong>Nombre del postulante:</strong> {{practicePostulation?.userfirstname}} {{practicePostulation?.userlastname}}</p>
+                    </div>
+                    <div class="col-md-12 col-sm-12">
+                        <p><strong>Facultad:</strong> {{practicePostulation?.offerfaculty}}</p>
+                    </div>
+                    <div class="col-md-12 col-sm-12">
+                        <p><strong>Semestre:</strong> {{practicePostulation?.offeryear}}-{{practicePostulation?.offersemester}}</p>
+                    </div>
+                    <div class="file-upload-container" style="margin-top: 4%;">
+                        <table *ngIf="practicePostulation.urls.length > 0" class="table" style="margin-top: 4%;">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nombre del archivo</th>
+                                    <th scope="col">Acci&oacute;n</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let file of practicePostulation.urls; let i = index">
+                                    <td>{{ file.name }}</td>
+                                    <td><a [href]="file.url" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm"><fa-icon
+                                                    [icon]="faDownload"></fa-icon></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeModal()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

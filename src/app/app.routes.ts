@@ -20,6 +20,22 @@ export const routes: Routes = [
         loadChildren: () => import('./modules/users/users.module').then(m => m.UsersModule)
     },
     {
+        path: 'practice-offer',
+        loadChildren: () => import('./modules/practice-offers/practice-offers.module').then(m => m.PracticeOffersModule)
+    },
+    {
+        path: 'practice-postulation',
+        loadChildren: () => import('./modules/practice-postulation/practice-postulation.module').then(m => m.PracticePostulationModule)
+    },
+    {
+        path: 'upload-files',
+        loadChildren: () => import('./modules/upload-files/upload-files.module').then(m => m.UploadFilesModule)
+    },
+    {
+        path: 'admin',
+        loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)
+    },
+    {
         path: 'practice-offer-admin',
         loadChildren: () => import('./modules/practice-offer-admin/practice-offer-admin.module').then(m => m.PracticeOfferAdminModule)
     },

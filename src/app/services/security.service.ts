@@ -23,7 +23,6 @@ export class SecurityService {
 
   verifyActiveSession() {
     let currentSession = this.getSession();
-    console.log(currentSession);
     if (currentSession) {
       let userData = JSON.parse(currentSession);
       this.setUserData(userData);
@@ -80,8 +79,11 @@ export class SecurityService {
         username: sessionData.user.username,
         token: sessionData.access_token,
         isLogged: true,
+        id: sessionData.user.id,
+        name: sessionData.user.name,
         role: sessionData.user.role
       };
+      console.log(data);
       localStorage.setItem('session', JSON.stringify(data));
       this.setUserData(data);
       return true;
@@ -90,7 +92,6 @@ export class SecurityService {
 
   getSession() {
     let currentSession = localStorage.getItem('session');
-    console.log("pruebas" + currentSession);
     return currentSession;
   }
 
