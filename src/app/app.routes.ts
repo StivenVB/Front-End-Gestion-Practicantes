@@ -48,6 +48,10 @@ export const routes: Routes = [
         loadChildren: () => import('./modules/virtual-library/virtual-library.module').then(m => m.VirtualLibraryModule)
     },
     {
+        path: 'admitted',
+        loadChildren: () => import('./modules/admitted/admitted.module').then(m => m.AdmittedModule)
+    },
+    {
         path: '**',
         redirectTo: '/home'
     }

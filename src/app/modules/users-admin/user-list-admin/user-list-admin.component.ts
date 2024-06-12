@@ -10,6 +10,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { FormsModule } from '@angular/forms';
 import { UserAdminModel } from '../../../models/users-admin/user-admin-model';
 import { UserAdminService } from '../../../services/users-admin/user-admin.service';
+import * as XLSX from 'xlsx';
 
 declare var $: any;
 
@@ -17,8 +18,8 @@ declare var $: any;
   selector: 'app-user-list-admin',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, NgxPaginationModule, RouterModule, NgxSpinnerModule, FormsModule],
-    templateUrl: './user-list-admin.component.html',
-  styleUrl: './user-list-admin.component.css'
+  templateUrl: './user-list-admin.component.html',
+  styleUrls: ['./user-list-admin.component.css']
 })
 export class UserListAdminComponent implements OnInit {
   page: number = 1;
@@ -31,8 +32,7 @@ export class UserListAdminComponent implements OnInit {
   isLoading: boolean = true;
   searchTerm: string = '';
 
-  constructor(private service: UserAdminService,
-    private spinner: NgxSpinnerService) { }
+  constructor(private service: UserAdminService, private spinner: NgxSpinnerService) {}
 
   ngOnInit(): void {
     this.spinner.show();
@@ -113,5 +113,12 @@ export class UserListAdminComponent implements OnInit {
     }
     this.page = 1;
     this.filterRecords();
+  }
+
+  exportToExcel() {
+    const worksheet = XLSX.utils.json_to_sheet(this.recordList);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Usuarios');
+    XLSX.writeFile(workbook, 'Usuarios.xlsx');
   }
 }

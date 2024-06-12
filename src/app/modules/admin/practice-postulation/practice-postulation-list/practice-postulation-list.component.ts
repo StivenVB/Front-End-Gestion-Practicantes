@@ -1,29 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { PracticePostulationService } from '../../../../services/practice-postulation.service';
 import { PracticePostulationModel } from '../../../../models/practice-postulation.model';
-import {NgxPaginationModule} from 'ngx-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { NgFor, NgIf } from '@angular/common';
 import { SecurityService } from '../../../../services/security.service';
 import { faDownload, faCheck, faXmark, faInfo } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { GeneralFunctions } from '../../../../../assets/ts-scripts/general-functions';
 import { FormsConfig } from '../../../../config/forms-config';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import * as XLSX from 'xlsx';
+import { FormsConfig } from '../../../../config/forms-config';
 
-declare var $:any;
+declare var $: any;
 
 @Component({
   selector: 'app-practice-postulation-list',
   standalone: true,
-  imports: [NgxPaginationModule, NgFor, NgIf, FontAwesomeModule, ReactiveFormsModule, FormsModule],
+  imports: [NgxPaginationModule, NgFor, NgIf, FontAwesomeModule, FormsModule, ReactiveFormsModule],
   templateUrl: './practice-postulation-list.component.html',
-  styleUrl: './practice-postulation-list.component.css'
+  styleUrls: ['./practice-postulation-list.component.css']
 })
 export class PracticePostulationListComponent implements OnInit {
   loading: boolean = false;
   loadingUpdate: boolean = false;
-  p: number = 1;
   faDownload: any = faDownload;
   faCheck: any = faCheck;
   faXmark: any = faXmark;
@@ -33,6 +35,9 @@ export class PracticePostulationListComponent implements OnInit {
   practicePostulationList: PracticePostulationModel[] = [];
   practicePostulation: PracticePostulationModel = new PracticePostulationModel;
   filteredRecordList: PracticePostulationModel[] = [];
+  searchTerm: string = '';
+  itemsPageAmount: number = FormsConfig.ITEMS_PER_PAGE;
+  page: number = 1;
 
   constructor(
     private practicePostulationSrv: PracticePostulationService,
@@ -49,7 +54,7 @@ export class PracticePostulationListComponent implements OnInit {
       this.practicePostulationSrv.GetPracticePostulations().subscribe(
         data => {
           this.loading = false;
-          console.log(data);
+          console.log(data)
           this.practicePostulationList = data;
           this.filteredRecordList = data;
         },
@@ -57,12 +62,13 @@ export class PracticePostulationListComponent implements OnInit {
           console.log(error);
           this.loading = false;
         }
-      )
+      );
     }
   }
 
   handlePageSizeChange(event: any): void {
-    this.p = event;
+    this.itemsPageAmount = event;
+    this.filterRecords();
   }
 
   openModal(practicePostulation: PracticePostulationModel) {
@@ -72,7 +78,7 @@ export class PracticePostulationListComponent implements OnInit {
   }
 
   closeModal() {
-    this.practicePostulation = new PracticePostulationModel;
+    this.practicePostulation = new PracticePostulationModel();
     $('#modalPostulationInfo').modal('hide');
   }
 
@@ -109,7 +115,6 @@ export class PracticePostulationListComponent implements OnInit {
   }
 
   updatePostulationStatus(practicePostulation: PracticePostulationModel) {
-    //this.loadingUpdate = true;
     this.practicePostulationSrv.UpdatePracticePostulation(practicePostulation).subscribe(
       data => {
         console.log(data);
@@ -128,7 +133,7 @@ export class PracticePostulationListComponent implements OnInit {
           text: 'Se presentó un problema al actualizar la postulación'
         });
       }
-    )
+    );
   }
 
   filterRecords() {
@@ -147,8 +152,21 @@ export class PracticePostulationListComponent implements OnInit {
     if (!this.itemsPageAmount || this.itemsPageAmount <= 0) {
       this.itemsPageAmount = FormsConfig.ITEMS_PER_PAGE;
     }
-    this.p = 1;
+    this.page = 1;
     this.filterRecords();
   }
 
+  filterRecords() {
+    const term = this.searchTerm.toLowerCase();
+    this.filteredRecordList = this.practicePostulationList.filter(doc =>
+      (doc.offerfaculty?.toLowerCase().includes(term) || '')
+    );
+  }
+
+  exportToExcel() {
+    const worksheet = XLSX.utils.json_to_sheet(this.filteredRecordList);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Postulaciones');
+    XLSX.writeFile(workbook, 'Postulaciones.xlsx');
+  }
 }

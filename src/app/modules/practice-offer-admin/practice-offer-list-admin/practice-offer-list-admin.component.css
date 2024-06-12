@@ -123,3 +123,26 @@ h2 {
   color: white;
   margin: 0;
 }
+
+/* Additional styles for button alignment */
+.practice-offer-container .practice-offer-box .d-flex.justify-content-between {
+  margin-bottom: 20px;
+}
+
+.practice-offer-container .practice-offer-box .d-flex.justify-content-between .btn {
+  margin-right: 10px;
+}
+
+.practice-offer-container .practice-offer-box .d-flex.justify-content-between .btn:last-child {
+  margin-right: 0;
+}
+
+.d-flex .btn {
+  display: flex;
+  align-items: center;
+}
+
+/* Custom class for export button */
+.export-btn i {
+  margin-right: 5px; /* Ajusta este valor según sea necesario */
+}
