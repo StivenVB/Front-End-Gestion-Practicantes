@@ -11,6 +11,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { GeneralFunctions } from '../../../../assets/ts-scripts/general-functions';
 import { FormsModule } from '@angular/forms';
+import * as XLSX from 'xlsx';
 
 declare var $: any;
 
@@ -157,5 +158,12 @@ export class PracticeOfferListAdminComponent implements OnInit {
     }
     this.page = 1;
     this.filterRecords();
+  }
+
+  exportToExcel() {
+    const worksheet = XLSX.utils.json_to_sheet(this.recordList);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'GestionOfertas');
+    XLSX.writeFile(workbook, 'GestionOfertas.xlsx');
   }
 }

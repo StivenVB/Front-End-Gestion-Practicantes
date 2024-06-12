@@ -3,8 +3,12 @@
   <div class="practice-offer-box">
     <h2>Lista de Ofertas de Práctica</h2>
     <br>
-    <a class="btn btn-success" routerLink="/practice-offer-admin/creation" role="button">Nuevo Registro</a>
-    <br /><br />
+    <div class="d-flex justify-content-between mb-3">
+      <a class="btn btn-primary" routerLink="/practice-offer-admin/creation" role="button">Nueva Oferta de Práctica</a>
+      <button class="btn btn-success export-btn" (click)="exportToExcel()">
+        <i class="fas fa-file-excel"></i>&nbsp;Exportar a Excel
+      </button>
+    </div>
     <div class="d-flex mb-3 justify-content-between align-items-end">
       <div class="search-container">
         <label for="search-input" class="form-label">Buscador</label>
@@ -15,9 +19,8 @@
         <input id="items-page-input" type="number" [(ngModel)]="itemsPageAmount" (ngModelChange)="updateItemsPerPage()" class="form-control items-per-page" placeholder="Items por página" />
       </div>
     </div>
-    <div class="spinner-container" *ngIf="isLoading">
-      <div class="spinner-content">
-        <div class="spinner-border text-primary" role="status"></div>
+    <div class="col-md-12 col-sm-12 d-flex justify-content-center" *ngIf="isLoading">
+      <div class="spinner-border" style="width: 5rem; height: 5rem; margin-bottom: 3%;" role="status">
       </div>
     </div>
     <div *ngIf="!isLoading" class="table-responsive">
