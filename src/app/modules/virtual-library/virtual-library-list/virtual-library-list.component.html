@@ -13,9 +13,8 @@
         <input id="items-page-input" type="number" [(ngModel)]="itemsPageAmount" (ngModelChange)="updateItemsPerPage()" class="form-control items-per-page" placeholder="Items por página" />
       </div>
     </div>
-    <div class="spinner-container" *ngIf="isLoading">
-      <div class="spinner-content">
-        <div class="spinner-border text-primary" role="status"></div>
+    <div class="col-md-12 col-sm-12 d-flex justify-content-center" *ngIf="isLoading">
+      <div class="spinner-border" style="width: 5rem; height: 5rem; margin-bottom: 3%;" role="status">
       </div>
     </div>
     <div *ngIf="!isLoading" class="table-responsive">
