@@ -1,0 +1,22 @@
+.search-container,
+.items-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.search-bar {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #4a69bd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.search-bar:focus {
+    outline: none;
+    border-color: #16222a;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}

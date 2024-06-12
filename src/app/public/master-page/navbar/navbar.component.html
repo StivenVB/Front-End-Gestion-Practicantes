@@ -27,13 +27,12 @@
             <a class="dropdown-item" *ngIf="isLogged && role === 1" routerLink="/practice-offer-admin/list">Ofertas de práctica</a>
             <a class="dropdown-item" *ngIf="isLogged && role == 1" routerLink="/admin/practice-postulation/list">Ver Postulaciones</a>
             <a class="dropdown-item" routerLink="/virtual-library/list">Biblioteca virtual</a>
-            <a class="dropdown-item" routerLink="/upload-files/upload-practice-file">Cargar Arch&iacute;vo Pr&aacute;ctica</a>
+            <a class="dropdown-item" *ngIf="!isLogged" routerLink="/upload-files/upload-practice-file">Cargar Arch&iacute;vo Pr&aacute;ctica</a>
             <a class="dropdown-item" *ngIf="isLogged && role === 1" routerLink="/users-admin/list">Gestión de usuarios</a>
             <a class="dropdown-item" *ngIf="!isLogged" routerLink="/users/register">Registro</a>
-            <a class="dropdown-item" *ngIf="isLogged" routerLink="/security/change-password">Cambiar Contraseña</a>
             <a class="dropdown-item" *ngIf="isLogged" routerLink="/security/logout">Cerrar Sesión</a>
           </div>
-        </li> 
+        </li>
       </ul>
     </div>
   </div>

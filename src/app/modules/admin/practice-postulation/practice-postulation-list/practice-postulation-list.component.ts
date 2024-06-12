@@ -7,13 +7,16 @@ import { SecurityService } from '../../../../services/security.service';
 import { faDownload, faCheck, faXmark, faInfo } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import Swal from 'sweetalert2';
+import { GeneralFunctions } from '../../../../../assets/ts-scripts/general-functions';
+import { FormsConfig } from '../../../../config/forms-config';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 declare var $:any;
 
 @Component({
   selector: 'app-practice-postulation-list',
   standalone: true,
-  imports: [NgxPaginationModule, NgFor, NgIf, FontAwesomeModule],
+  imports: [NgxPaginationModule, NgFor, NgIf, FontAwesomeModule, ReactiveFormsModule, FormsModule],
   templateUrl: './practice-postulation-list.component.html',
   styleUrl: './practice-postulation-list.component.css'
 })
@@ -25,8 +28,11 @@ export class PracticePostulationListComponent implements OnInit {
   faCheck: any = faCheck;
   faXmark: any = faXmark;
   faInfo: any = faInfo;
+  searchTerm: string = '';
+  itemsPageAmount: number = FormsConfig.ITEMS_PER_PAGE;
   practicePostulationList: PracticePostulationModel[] = [];
   practicePostulation: PracticePostulationModel = new PracticePostulationModel;
+  filteredRecordList: PracticePostulationModel[] = [];
 
   constructor(
     private practicePostulationSrv: PracticePostulationService,
@@ -45,6 +51,7 @@ export class PracticePostulationListComponent implements OnInit {
           this.loading = false;
           console.log(data);
           this.practicePostulationList = data;
+          this.filteredRecordList = data;
         },
         error => {
           console.log(error);
@@ -122,6 +129,26 @@ export class PracticePostulationListComponent implements OnInit {
         });
       }
     )
+  }
+
+  filterRecords() {
+    const term = this.searchTerm.toLowerCase();
+    this.filteredRecordList = this.practicePostulationList.filter(doc =>
+      (doc.offerfaculty?.toLowerCase().includes(term) || '') ||
+      (doc.userfirstname?.toLowerCase().includes(term) || '') ||
+      (doc.userlastname?.toLowerCase().includes(term) || '') ||
+      (doc.status?.toLowerCase().includes(term) || '') ||
+      (`${doc.offeryear}-${doc.offersemester}`.includes(term) || '') ||
+      (GeneralFunctions.formatDate(doc.createdAt).includes(term))
+    );
+  }
+
+  updateItemsPerPage() {
+    if (!this.itemsPageAmount || this.itemsPageAmount <= 0) {
+      this.itemsPageAmount = FormsConfig.ITEMS_PER_PAGE;
+    }
+    this.p = 1;
+    this.filterRecords();
   }
 
 }

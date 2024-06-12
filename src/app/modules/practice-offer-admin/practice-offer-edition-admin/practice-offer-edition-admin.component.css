@@ -98,6 +98,19 @@ h2 {
   background-color: #e0a800;
 }
 
+.btn-primary2 {
+  background-color: #218EEF;
+  color: white;
+  border: none;
+  padding: 15px;
+  font-size: 18px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s;
+  margin-top: 10px;
+}
+
 .avatar img {
   width: 100px;
   height: 100px;

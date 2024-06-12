@@ -6,8 +6,9 @@ export class PracticeOfferModel{
     description?: String;
     year?: number;
     semester?: number;
-    starDate?: Date;
+    startDate?: Date;
     endDate?: Date;
     isActive?: boolean;
+    career?: String;
     formSchema: PracticeOfferFormModel = new PracticeOfferFormModel;
 }
