@@ -49,6 +49,7 @@ export class PracticePostulationListComponent implements OnInit {
       this.practicePostulationSrv.GetPracticePostulations().subscribe(
         data => {
           this.loading = false;
+          console.log(data)
           this.practicePostulationList = data;
           this.filteredRecordList = data;
         },
