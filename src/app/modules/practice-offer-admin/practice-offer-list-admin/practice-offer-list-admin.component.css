@@ -62,12 +62,6 @@ h2 {
   word-wrap: break-word; /* Ensure long words break */
 }
 
-.search-container, .items-page-container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
 .search-bar {
   width: 100%;
   max-width: 400px;

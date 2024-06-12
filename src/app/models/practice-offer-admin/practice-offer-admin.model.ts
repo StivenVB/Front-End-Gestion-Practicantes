@@ -9,4 +9,5 @@ export class PracticeOfferAdminModel {
     semester?: number;
     endDate?: Date;
     career?: String;
+    formSchema?: any;
 }

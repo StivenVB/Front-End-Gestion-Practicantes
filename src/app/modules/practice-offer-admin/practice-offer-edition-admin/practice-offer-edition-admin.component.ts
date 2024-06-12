@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule, FormArray } from '@angular/forms';
 import { FormsConfig } from '../../../config/forms-config';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { PracticeOfferAdminService } from '../../../services/practice-offer-admin/practice-offer-admin.service';
@@ -9,6 +9,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 import Swal from 'sweetalert2';
+
+declare var $:any;
 
 @Component({
   selector: 'app-practice-offer-edition-admin',
@@ -21,8 +23,11 @@ export class PracticeOfferEditionAdminComponent implements OnInit {
   fgValidator!: FormGroup;
   minLengthName: number = FormsConfig.MIN_LENGTH_NAME;
   minLengthCode: number = FormsConfig.MIN_LENGTH_CODE;
-  id!: string; 
+  id!: string;
   isLoading: boolean = false;
+  fieldForm!: FormGroup;
+  fields: any[] = [];
+  editIndex: number | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -35,6 +40,7 @@ export class PracticeOfferEditionAdminComponent implements OnInit {
   ngOnInit(): void {
     this.getRecordDataById();
     this.FormBuilding();
+    this.FormQuestionsBuilding();
   }
 
   getRecordDataById() {
@@ -49,6 +55,7 @@ export class PracticeOfferEditionAdminComponent implements OnInit {
         this.fgv['year'].setValue(data.year);
         this.fgv['semester'].setValue(data.semester);
         this.fgv['endDate'].setValue(data.endDate);
+        this.fields = data.formSchema.fields ? data.formSchema.fields : [];
       }
     );
   }
@@ -64,6 +71,15 @@ export class PracticeOfferEditionAdminComponent implements OnInit {
       isActive: [null, [Validators.required]],
       semester: ['', [Validators.required]],
       endDate: ['', [Validators.required]],
+    });
+  }
+
+  FormQuestionsBuilding() {
+    this.fieldForm = this.fb.group({
+      name: ['', Validators.required],
+      label: ['', Validators.required],
+      type: ['', Validators.required],
+      options: this.fb.array([])
     });
   }
 
@@ -114,11 +130,81 @@ export class PracticeOfferEditionAdminComponent implements OnInit {
     model.year = this.fgv['year'].value;
     model.startDate = this.fgv['startDate'].value;
     model.isActive = this.fgv['isActive'].value;
+    model.formSchema = {
+      fields: this.fields
+    };
     console.log(model);
     return model;
   }
 
   get fgv() {
     return this.fgValidator.controls;
+  }
+
+  get options() {
+    return this.fieldForm.get('options') as FormArray;
+  }
+
+  addOption() {
+    this.options.push(this.fb.group({
+      value: ['', Validators.required],
+      label: ['', Validators.required]
+    }));
+  }
+
+  removeOption(index: number) {
+    this.options.removeAt(index);
+  }
+
+  addField() {
+    if (this.fieldForm.valid) {
+      if (this.editIndex !== null) {
+        this.fields[this.editIndex] = this.fieldForm.value;
+        this.editIndex = null;
+      } else {
+        this.fields.push(this.fieldForm.value);
+      }
+      this.fieldForm.reset();
+      this.options.clear();
+    } else {
+      console.log('El formulario de campo no es válido');
+    }
+  }
+
+  editField(index: number) {
+    const field = this.fields[index];
+    this.fieldForm.patchValue(field);
+    this.options.clear();
+    if (field.type === 'select') {
+      field.options.forEach((option: { value: any; label: any; }) => {
+        this.options.push(this.fb.group({
+          value: [option.value, Validators.required],
+          label: [option.label, Validators.required]
+        }));
+      });
+    }
+    this.editIndex = index;
+  }
+
+  deleteField(index: number) {
+    this.fields.splice(index, 1);
+  }
+
+  openQuestionModal(){
+    $('#modalEditOfferQuestions').modal('show');
+  }
+
+  closeQuestionModal(){
+    $('#modalEditOfferQuestions').modal('hide');
+  }
+
+  SaveOfferQuestions() {
+    console.log(this.fields);
+    this.closeQuestionModal();
+    Swal.fire({
+      icon: 'success',
+      title: 'Success',
+      text: 'Preguntas agregadas correctamente'
+    });
   }
 }

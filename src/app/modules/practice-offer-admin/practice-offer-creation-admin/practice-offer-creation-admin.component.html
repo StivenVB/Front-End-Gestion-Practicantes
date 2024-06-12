@@ -7,12 +7,12 @@
         </div>
         <h2>Crear Oferta de Práctica</h2>
         <br>
-    <div class="spinner-container" *ngIf="isLoading">
-      <div class="spinner-content">
-        <div class="spinner-border text-primary" role="status">
+        <div class="spinner-container" *ngIf="isLoading">
+            <div class="spinner-content">
+                <div class="spinner-border text-primary" role="status">
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
         <form [formGroup]="fgValidator">
             <div class="input-box">
                 <label for="faculty">Facultad</label>
@@ -36,7 +36,8 @@
             </div>
             <div class="input-box">
                 <label for="description">Descripción</label>
-                <input formControlName="description" id="description" name="description" class="form-control" type="text">
+                <input formControlName="description" id="description" name="description" class="form-control"
+                    type="text">
                 <div class="warning-validator"
                     *ngIf="fgv['description'].errors && (fgv['description'].dirty || fgv['description'].touched)">
                     <strong *ngIf="fgv['description'].errors['required']">
@@ -47,8 +48,7 @@
             <div class="input-box">
                 <label for="year">Año</label>
                 <input formControlName="year" id="year" name="year" class="form-control" type="text">
-                <div class="warning-validator"
-                    *ngIf="fgv['year'].errors && (fgv['year'].dirty || fgv['year'].touched)">
+                <div class="warning-validator" *ngIf="fgv['year'].errors && (fgv['year'].dirty || fgv['year'].touched)">
                     <strong *ngIf="fgv['year'].errors['required']">
                         El campo es requerido.
                     </strong>
@@ -76,7 +76,7 @@
                         El campo es requerido.
                     </strong>
                 </div>
-            </div>                        
+            </div>
             <div class="input-box">
                 <label for="startDate">Fecha Inicio</label>
                 <input formControlName="startDate" id="startDate" name="startDate" class="form-control" type="text">
@@ -98,10 +98,90 @@
                 </div>
             </div>
             <div class="form-group">
+                <button type="button" (click)="openQuestionModal()" class="btn btn-primary2 mb-2">Ver
+                    Preguntas</button>
                 <button type="button" (click)="saveNewRecord()" class="submit-btn">Crear</button>
                 <a class="btn btn-warning" routerLink="/practice-offer-admin/list" role="button">Cancelar</a>
             </div>
         </form>
         <br>
+    </div>
+</div>
+
+<div class="modal fade" id="modalOfferQuestions" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Preguntas de la Oferta</h1>
+                <button type="button" class="btn-close" (click)="closeQuestionModal()" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Formulario para definir campos -->
+                <form [formGroup]="fieldForm" (ngSubmit)="addField()" class="registration-form">
+                    <div>
+                        <label class="form-label">Nombre del campo:</label>
+                        <input class="form-control" formControlName="name">
+                    </div>
+                    <div>
+                        <label class="form-label">Etiqueta de la pregunta:</label>
+                        <input class="form-control" formControlName="label">
+                    </div>
+                    <div>
+                        <label class="form-label">Tipo de pregunta:</label>
+                        <select class="form-select" formControlName="type">
+                            <option value="" selected>Seleccione una opci&oacute;n</option>
+                            <option value="text">Texto</option>
+                            <option value="select">Selector</option>
+                            <option value="textarea">Area de Texto</option>
+                        </select>
+                    </div>
+
+                    <div *ngIf="fieldForm.get('type')?.value === 'select'">
+                        <div formArrayName="options">
+                            <div *ngFor="let option of options.controls; let i=index">
+                                <div [formGroupName]="i">
+                                    <label class="form-label">Nombre de la opci&oacute;n:</label>
+                                    <input class="form-control" formControlName="value">
+                                    <label class="form-label">Etiqueta de la opci&oacute;n:</label>
+                                    <input class="form-control" formControlName="label">
+                                    <button class="btn btn-danger mt-2" type="button"
+                                        (click)="removeOption(i)">Eliminar Opci&oacute;n</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br />
+                        <button type="button" class="btn btn-success" (click)="addOption()">Agregar
+                            Opci&oacute;n</button>
+                    </div>
+
+                    <br />
+                    <button type="submit" class="btn btn-primary">{{ editIndex !== null ? 'Actualizar Pregunta' : 'Agregar Pregunta' }}</button>
+                </form>
+
+                <table *ngIf="fields.length > 0" class="table" style="margin-top: 4%;">
+                    <thead>
+                        <tr>
+                            <th scope="col">Campo</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let field of fields; let i = index">
+                            <td>{{ field.label }} ({{ field.type }})</td>
+                            <td>
+                                <button (click)="editField(i)" class="btn btn-secondary">Editar</button>
+                                &nbsp;
+                                <button (click)="deleteField(i)" class="btn btn-danger">Eliminar</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="SaveOfferQuestions()">Aregar Preguntas</button>
+                <button type="button" class="btn btn-secondary" (click)="closeQuestionModal()">Cerrar</button>
+            </div>
+        </div>
     </div>
 </div>

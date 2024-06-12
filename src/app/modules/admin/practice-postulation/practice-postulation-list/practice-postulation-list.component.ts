@@ -8,6 +8,9 @@ import { faDownload, faCheck, faXmark, faInfo } from '@fortawesome/free-solid-sv
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { GeneralFunctions } from '../../../../../assets/ts-scripts/general-functions';
+import { FormsConfig } from '../../../../config/forms-config';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import * as XLSX from 'xlsx';
 import { FormsConfig } from '../../../../config/forms-config';
 
@@ -27,9 +30,11 @@ export class PracticePostulationListComponent implements OnInit {
   faCheck: any = faCheck;
   faXmark: any = faXmark;
   faInfo: any = faInfo;
+  searchTerm: string = '';
+  itemsPageAmount: number = FormsConfig.ITEMS_PER_PAGE;
   practicePostulationList: PracticePostulationModel[] = [];
+  practicePostulation: PracticePostulationModel = new PracticePostulationModel;
   filteredRecordList: PracticePostulationModel[] = [];
-  practicePostulation: PracticePostulationModel = new PracticePostulationModel();
   searchTerm: string = '';
   itemsPageAmount: number = FormsConfig.ITEMS_PER_PAGE;
   page: number = 1;
@@ -128,6 +133,18 @@ export class PracticePostulationListComponent implements OnInit {
           text: 'Se presentó un problema al actualizar la postulación'
         });
       }
+    );
+  }
+
+  filterRecords() {
+    const term = this.searchTerm.toLowerCase();
+    this.filteredRecordList = this.practicePostulationList.filter(doc =>
+      (doc.offerfaculty?.toLowerCase().includes(term) || '') ||
+      (doc.userfirstname?.toLowerCase().includes(term) || '') ||
+      (doc.userlastname?.toLowerCase().includes(term) || '') ||
+      (doc.status?.toLowerCase().includes(term) || '') ||
+      (`${doc.offeryear}-${doc.offersemester}`.includes(term) || '') ||
+      (GeneralFunctions.formatDate(doc.createdAt).includes(term))
     );
   }
 
