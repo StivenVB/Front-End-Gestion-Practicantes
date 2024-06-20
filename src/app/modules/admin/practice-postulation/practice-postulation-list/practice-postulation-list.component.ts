@@ -9,9 +9,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { GeneralFunctions } from '../../../../../assets/ts-scripts/general-functions';
-import * as XLSX from 'xlsx';
 import { FormsConfig } from '../../../../config/forms-config';
-
+import * as XLSX from 'xlsx';
 declare var $: any;
 
 @Component({
@@ -134,13 +133,6 @@ export class PracticePostulationListComponent implements OnInit {
     }
     this.page = 1;
     this.filterRecords();
-  }
-
-  filterRecords() {
-    const term = this.searchTerm.toLowerCase();
-    this.filteredRecordList = this.practicePostulationList.filter(doc =>
-      (doc.offerfaculty?.toLowerCase().includes(term) || '')
-    );
   }
 
   exportToExcel() {

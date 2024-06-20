@@ -76,7 +76,7 @@ export class PracticeOfferEditionAdminComponent implements OnInit {
 
   FormQuestionsBuilding() {
     this.fieldForm = this.fb.group({
-      name: ['', Validators.required],
+      name: [''],
       label: ['', Validators.required],
       type: ['', Validators.required],
       options: this.fb.array([])
@@ -146,7 +146,7 @@ export class PracticeOfferEditionAdminComponent implements OnInit {
 
   addOption() {
     this.options.push(this.fb.group({
-      value: ['', Validators.required],
+      value: [''],
       label: ['', Validators.required]
     }));
   }
@@ -166,6 +166,11 @@ export class PracticeOfferEditionAdminComponent implements OnInit {
       this.fieldForm.reset();
       this.options.clear();
     } else {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Advertencia',
+        text: 'Se deben diligenciar todos los campos.'
+      });
     }
   }
 
@@ -203,5 +208,21 @@ export class PracticeOfferEditionAdminComponent implements OnInit {
       title: 'Success',
       text: 'Preguntas agregadas correctamente'
     });
+  }
+
+  setFieldName() {
+    let labelField = this.fieldForm.get('label')?.value;
+    this.fieldForm.get('name')?.setValue(this.normalizeField(labelField));
+  }
+
+  setFieldOptionName(index: number) {
+    let labelField = this.options.at(index).get('label')?.value;
+    this.options.at(index).get('value')?.setValue(this.normalizeField(labelField));
+  }
+
+  normalizeField(fieldValue: any) {
+    var normField = fieldValue.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+    return normField.trim().replace(' ', '');
   }
 }
