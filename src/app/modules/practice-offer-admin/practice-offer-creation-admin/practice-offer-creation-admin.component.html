@@ -118,13 +118,10 @@
             <div class="modal-body">
                 <!-- Formulario para definir campos -->
                 <form [formGroup]="fieldForm" (ngSubmit)="addField()" class="registration-form">
-                    <div>
-                        <label class="form-label">Nombre del campo:</label>
-                        <input class="form-control" formControlName="name">
-                    </div>
+                    <input type="hidden" formControlName="name" id="txtFieldName">
                     <div>
                         <label class="form-label">Etiqueta de la pregunta:</label>
-                        <input class="form-control" formControlName="label">
+                        <input class="form-control" formControlName="label" id="txtFieldLabel" (change)="setFieldName()">
                     </div>
                     <div>
                         <label class="form-label">Tipo de pregunta:</label>
