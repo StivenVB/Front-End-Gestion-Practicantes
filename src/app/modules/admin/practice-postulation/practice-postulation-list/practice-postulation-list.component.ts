@@ -10,10 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { GeneralFunctions } from '../../../../../assets/ts-scripts/general-functions';
 import { FormsConfig } from '../../../../config/forms-config';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import * as XLSX from 'xlsx';
-import { FormsConfig } from '../../../../config/forms-config';
-
 declare var $: any;
 
 @Component({
@@ -35,8 +32,6 @@ export class PracticePostulationListComponent implements OnInit {
   practicePostulationList: PracticePostulationModel[] = [];
   practicePostulation: PracticePostulationModel = new PracticePostulationModel;
   filteredRecordList: PracticePostulationModel[] = [];
-  searchTerm: string = '';
-  itemsPageAmount: number = FormsConfig.ITEMS_PER_PAGE;
   page: number = 1;
 
   constructor(
@@ -154,13 +149,6 @@ export class PracticePostulationListComponent implements OnInit {
     }
     this.page = 1;
     this.filterRecords();
-  }
-
-  filterRecords() {
-    const term = this.searchTerm.toLowerCase();
-    this.filteredRecordList = this.practicePostulationList.filter(doc =>
-      (doc.offerfaculty?.toLowerCase().includes(term) || '')
-    );
   }
 
   exportToExcel() {
