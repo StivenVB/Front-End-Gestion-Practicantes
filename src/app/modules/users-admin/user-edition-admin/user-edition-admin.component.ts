@@ -119,7 +119,6 @@ export class UserEditionAdminComponent implements OnInit {
     model.faculty = this.fgv['faculty'].value;
     model.career = this.fgv['career'].value;
     model.roleId = this.fgv['roleId'].value;
-    console.log(model);
     return model;
   }
 

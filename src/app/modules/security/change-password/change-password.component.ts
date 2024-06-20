@@ -91,7 +91,6 @@ export class ChangePasswordComponent {
     let model = new ChangePasswordModel();
     model.token = this.fgv['token'].value.toString();
     model.newPassword = this.fgv['newPassword'].value.toString();
-    console.log(model);
     return model;
   }
 

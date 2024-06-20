@@ -133,7 +133,6 @@ export class PracticeOfferEditionAdminComponent implements OnInit {
     model.formSchema = {
       fields: this.fields
     };
-    console.log(model);
     return model;
   }
 
@@ -167,7 +166,6 @@ export class PracticeOfferEditionAdminComponent implements OnInit {
       this.fieldForm.reset();
       this.options.clear();
     } else {
-      console.log('El formulario de campo no es válido');
     }
   }
 
@@ -199,7 +197,6 @@ export class PracticeOfferEditionAdminComponent implements OnInit {
   }
 
   SaveOfferQuestions() {
-    console.log(this.fields);
     this.closeQuestionModal();
     Swal.fire({
       icon: 'success',

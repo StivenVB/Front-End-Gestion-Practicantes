@@ -78,7 +78,6 @@ export class ResetPasswordComponent implements OnInit {
   getResetPasswordData(): ResetPasswordModel {
     let model = new ResetPasswordModel();
     model.email = this.fgv["username"].value;
-    console.log(model);
     return model;
   }
 

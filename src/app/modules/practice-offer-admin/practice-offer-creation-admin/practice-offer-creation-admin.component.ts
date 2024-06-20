@@ -74,7 +74,6 @@ export class PracticeOfferCreationAdminComponent implements OnInit {
       this.isLoading = true;
       this.spinner.show();
       let model = this.getRecordData();
-      console.log(model);
       this.service.saveNewRecord(model).subscribe(
         data => {
           this.isLoading = false;
@@ -146,7 +145,6 @@ export class PracticeOfferCreationAdminComponent implements OnInit {
       this.fieldForm.reset();
       this.options.clear();
     } else {
-      console.log('El formulario de campo no es válido');
     }
   }
 
@@ -178,7 +176,6 @@ export class PracticeOfferCreationAdminComponent implements OnInit {
   }
 
   SaveOfferQuestions() {
-    console.log(this.fields);
     this.closeQuestionModal();
     Swal.fire({
       icon: 'success',

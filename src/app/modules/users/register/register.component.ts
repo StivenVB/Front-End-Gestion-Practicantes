@@ -71,7 +71,6 @@ export class RegisterComponent implements OnInit {
       let model = this.getUserRegisterData();
       this.service.UserRegister(model).subscribe(
         data => {
-          console.log(JSON.stringify(data));
           if (data) {
             this.isLoading = false;
             Swal.fire({
@@ -119,7 +118,6 @@ export class RegisterComponent implements OnInit {
     model.faculty = this.fgv["faculty"].value;
     model.career = this.fgv["career"].value;
     model.roleId = 2;
-    console.log(model)
     return model;
   }
 

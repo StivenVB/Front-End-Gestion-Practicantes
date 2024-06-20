@@ -66,7 +66,6 @@ export class PracticeOfferListAdminComponent implements OnInit {
       this.deleteRecordId = recordId;
       this.openQuestionModal("deleteModal");
     } else {
-      console.error('El id del registro es undefined');
     }
   }
 
@@ -98,7 +97,6 @@ export class PracticeOfferListAdminComponent implements OnInit {
       this.changeCurrentState = currentState ?? false;
       this.openQuestionModal('changeStateModal');
     } else {
-      console.error('El id del registro es undefined');
     }
   }
 

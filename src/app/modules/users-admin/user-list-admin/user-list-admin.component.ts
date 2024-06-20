@@ -64,7 +64,6 @@ export class UserListAdminComponent implements OnInit {
       this.deleteRecordId = recordId;
       this.openQuestionModal("deleteModal");
     } else {
-      console.error('El id del registro es undefined');
     }
   }
 

@@ -112,7 +112,6 @@ export class UserCreationAdminComponent implements OnInit {
     model.career = this.fgv['career'].value;
     model.roleId = this.fgv['roleId'].value;
     model.password = this.fgv['password'].value;
-    console.log(model);
     return model;
   }
 

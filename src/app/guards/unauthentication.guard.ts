@@ -16,7 +16,6 @@ export class UnauthenticatedGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    console.log("From unauthenticated guard... ");
 
     if (this.service.sessionExists()) {
       this.router.navigate(["/home"]);

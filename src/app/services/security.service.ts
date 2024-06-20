@@ -67,11 +67,8 @@ export class SecurityService {
    * @param sessionData Object with user in session data
    */
   saveSession(sessionData: any): Boolean {
-    console.log(sessionData);
     let currentSession = localStorage.getItem('session');
-    console.log("test: " + currentSession)
     if (currentSession) {
-      console.log("Already exist")
       return false;
     } else {
       sessionData.isLogged = true;
@@ -83,7 +80,6 @@ export class SecurityService {
         name: sessionData.user.name,
         role: sessionData.user.role
       };
-      console.log(data);
       localStorage.setItem('session', JSON.stringify(data));
       this.setUserData(data);
       return true;
@@ -108,9 +104,6 @@ export class SecurityService {
    */
   isUserRol(roleId: string): Boolean {
     let currentSession = this.getSession() ?? "";
-    console.log(currentSession);
-    console.log("roleId: " + roleId);
-    console.log(JSON.parse(currentSession).role == roleId);
     return JSON.parse(currentSession).role == roleId;
   }
 

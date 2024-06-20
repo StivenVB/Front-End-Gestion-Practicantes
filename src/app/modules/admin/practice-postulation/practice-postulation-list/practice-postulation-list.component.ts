@@ -9,8 +9,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { GeneralFunctions } from '../../../../../assets/ts-scripts/general-functions';
-import { FormsConfig } from '../../../../config/forms-config';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import * as XLSX from 'xlsx';
 import { FormsConfig } from '../../../../config/forms-config';
 
@@ -35,8 +33,6 @@ export class PracticePostulationListComponent implements OnInit {
   practicePostulationList: PracticePostulationModel[] = [];
   practicePostulation: PracticePostulationModel = new PracticePostulationModel;
   filteredRecordList: PracticePostulationModel[] = [];
-  searchTerm: string = '';
-  itemsPageAmount: number = FormsConfig.ITEMS_PER_PAGE;
   page: number = 1;
 
   constructor(
@@ -54,12 +50,10 @@ export class PracticePostulationListComponent implements OnInit {
       this.practicePostulationSrv.GetPracticePostulations().subscribe(
         data => {
           this.loading = false;
-          console.log(data)
           this.practicePostulationList = data;
           this.filteredRecordList = data;
         },
         error => {
-          console.log(error);
           this.loading = false;
         }
       );
@@ -72,7 +66,6 @@ export class PracticePostulationListComponent implements OnInit {
   }
 
   openModal(practicePostulation: PracticePostulationModel) {
-    console.log(practicePostulation);
     this.practicePostulation = practicePostulation;
     $('#modalPostulationInfo').modal('show');
   }
@@ -117,7 +110,6 @@ export class PracticePostulationListComponent implements OnInit {
   updatePostulationStatus(practicePostulation: PracticePostulationModel) {
     this.practicePostulationSrv.UpdatePracticePostulation(practicePostulation).subscribe(
       data => {
-        console.log(data);
         this.loadingUpdate = false;
         Swal.fire({
           icon: 'success',
@@ -133,18 +125,6 @@ export class PracticePostulationListComponent implements OnInit {
           text: 'Se presentó un problema al actualizar la postulación'
         });
       }
-    );
-  }
-
-  filterRecords() {
-    const term = this.searchTerm.toLowerCase();
-    this.filteredRecordList = this.practicePostulationList.filter(doc =>
-      (doc.offerfaculty?.toLowerCase().includes(term) || '') ||
-      (doc.userfirstname?.toLowerCase().includes(term) || '') ||
-      (doc.userlastname?.toLowerCase().includes(term) || '') ||
-      (doc.status?.toLowerCase().includes(term) || '') ||
-      (`${doc.offeryear}-${doc.offersemester}`.includes(term) || '') ||
-      (GeneralFunctions.formatDate(doc.createdAt).includes(term))
     );
   }
 
