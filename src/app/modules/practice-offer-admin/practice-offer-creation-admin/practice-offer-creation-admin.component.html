@@ -137,10 +137,9 @@
                         <div formArrayName="options">
                             <div *ngFor="let option of options.controls; let i=index">
                                 <div [formGroupName]="i">
-                                    <label class="form-label">Nombre de la opci&oacute;n:</label>
-                                    <input class="form-control" formControlName="value">
+                                    <input type="hidden" formControlName="value" id="txtFieldOptionName">
                                     <label class="form-label">Etiqueta de la opci&oacute;n:</label>
-                                    <input class="form-control" formControlName="label">
+                                    <input class="form-control" formControlName="label" (change)="setFieldOptionName(i)" id="txtFieldOptionLabel">
                                     <button class="btn btn-danger mt-2" type="button"
                                         (click)="removeOption(i)">Eliminar Opci&oacute;n</button>
                                 </div>
