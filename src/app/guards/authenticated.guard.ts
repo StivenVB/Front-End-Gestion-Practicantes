@@ -16,10 +16,8 @@ export class AuthenticatedGuard {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    console.log("From authenticated guard... ");
 
     if (!this.service.sessionExists()) {
-      console.log(this.service.sessionExists())
       this.router.navigate(["/home"]);
       return false;
     } else {

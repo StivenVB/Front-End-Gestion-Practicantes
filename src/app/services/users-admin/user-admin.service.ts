@@ -29,7 +29,6 @@ export class UserAdminService {
   }
 
   getRecordByUsername(username: string): Observable<UserAdminModel> {
-    console.log("test by username: " + username)
     return this.http.get<UserAdminModel>(`${ServiceConfig.BASE_URL}${this.entity}`, {
       headers: new HttpHeaders({
         Authorization: `Bearer ${this.token}`

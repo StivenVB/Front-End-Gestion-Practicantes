@@ -181,7 +181,6 @@ export class PracticeOfferCreationAdminComponent implements OnInit {
   }
 
   SaveOfferQuestions() {
-    console.log(this.fields);
     this.closeQuestionModal();
     Swal.fire({
       icon: 'success',

@@ -39,7 +39,7 @@ export class UploadPracticeFileComponent implements OnInit {
     ) {
     this.uploadForm = this.formBuilder.group({
       description: ['', Validators.required],
-      postulation: ['', Validators.required],
+      postulation: [''],
       file: [null]
     });
   }
@@ -51,12 +51,10 @@ export class UploadPracticeFileComponent implements OnInit {
   LoadPracticeOffers() {
     this.practiceOfferService.GetPracticeOfferList().subscribe(
       data => {
-        console.log(data);
         this.practiceOfferList = data;
         this.FilterPracticePostulations();
       },
       error => {
-        console.log(error);
       }
     )
   }
@@ -64,12 +62,10 @@ export class UploadPracticeFileComponent implements OnInit {
   LoadPracticePostulations() {
     this.practicePostulationService.GetPracticePostulationsByUser().subscribe(
       data => {
-        console.log(data);
         this.practicePostulationList = data;
         this.LoadPracticeOffers();
       },
       error => {
-        console.log(error);
       }
     )
   }
@@ -92,7 +88,6 @@ export class UploadPracticeFileComponent implements OnInit {
         this.practiceOfferListUser.push(practiceOfferUser);
       }
     });
-    console.log(this.practiceOfferListUser);
   }
 
   onFileChange(event: any) {
@@ -145,12 +140,10 @@ export class UploadPracticeFileComponent implements OnInit {
         formData.append("name", file.name);
         formData.append("description", this.uploadForm.get('description')?.value);
         formData.append("file", file, file.name);
-        formData.append("relateId", this.uploadForm.get('postulation')?.value);
         formData.append("relatedTable", "practicepostulation");
 
         this.urlRepositoryService.UploadFile(formData).subscribe(
           data => {
-            console.log(data);
           },
           error => {
             this.uploadError = true;

@@ -49,12 +49,10 @@ export class PracticePostulationListComponent implements OnInit {
       this.practicePostulationSrv.GetPracticePostulations().subscribe(
         data => {
           this.loading = false;
-          console.log(data)
           this.practicePostulationList = data;
           this.filteredRecordList = data;
         },
         error => {
-          console.log(error);
           this.loading = false;
         }
       );
@@ -67,7 +65,6 @@ export class PracticePostulationListComponent implements OnInit {
   }
 
   openModal(practicePostulation: PracticePostulationModel) {
-    console.log(practicePostulation);
     this.practicePostulation = practicePostulation;
     $('#modalPostulationInfo').modal('show');
   }
@@ -112,7 +109,6 @@ export class PracticePostulationListComponent implements OnInit {
   updatePostulationStatus(practicePostulation: PracticePostulationModel) {
     this.practicePostulationSrv.UpdatePracticePostulation(practicePostulation).subscribe(
       data => {
-        console.log(data);
         this.loadingUpdate = false;
         Swal.fire({
           icon: 'success',
@@ -128,18 +124,6 @@ export class PracticePostulationListComponent implements OnInit {
           text: 'Se presentó un problema al actualizar la postulación'
         });
       }
-    );
-  }
-
-  filterRecords() {
-    const term = this.searchTerm.toLowerCase();
-    this.filteredRecordList = this.practicePostulationList.filter(doc =>
-      (doc.offerfaculty?.toLowerCase().includes(term) || '') ||
-      (doc.userfirstname?.toLowerCase().includes(term) || '') ||
-      (doc.userlastname?.toLowerCase().includes(term) || '') ||
-      (doc.status?.toLowerCase().includes(term) || '') ||
-      (`${doc.offeryear}-${doc.offersemester}`.includes(term) || '') ||
-      (GeneralFunctions.formatDate(doc.createdAt).includes(term))
     );
   }
 

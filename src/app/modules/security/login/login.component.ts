@@ -84,7 +84,6 @@ export class LoginComponent implements OnInit {
     let model = new UserModel();
     model['username'] = this.fgv['username'].value.toString();
     model['password'] = this.fgv['password'].value.toString();
-    console.log(model);
     return model;
   }
 

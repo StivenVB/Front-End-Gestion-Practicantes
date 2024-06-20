@@ -17,7 +17,6 @@ export class AuthenticatedAdminGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    console.log("From authenticated admin guard... ");
     if (this.service.sessionExists() && this.service.isUserRol(ServiceConfig.adminUserRol)) {
       return true;
     } else {

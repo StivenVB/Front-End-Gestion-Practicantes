@@ -22,16 +22,6 @@
             <label for="description">Descripción</label>
             <textarea class="form-control" id="description" formControlName="description" rows="3" required></textarea>
         </div>
-        <div class="form-group mt-3">
-            <label for="postulation">Postulaci&oacute;n</label>
-            <select class="form-select" aria-label="Default select example" formControlName="postulation">
-                <option value="" selected>Seleccione una opci&oacute;n</option>
-                <option *ngFor="let postulation of practiceOfferListUser"
-                    [value]="postulation.postulationId?.toString()">{{ postulation.faculty }}
-                </option>
-            </select>
-        </div>
-
         <div class="col-md-6 col-sm-12 d-flex justify-content-center" *ngIf="loading">
             <div class="spinner-border" style="width: 2rem; height: 2rem; margin-bottom: 3%;" role="status">
             </div>

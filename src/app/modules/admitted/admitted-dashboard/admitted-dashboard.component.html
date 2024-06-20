@@ -1,0 +1,65 @@
+<div class="dashboard-container">
+    <div class="dashboard-box">
+      <h2>Dashboard de Postulaciones - Admitidos</h2>
+      <br>
+      <div class="col-md-12 col-sm-12 d-flex justify-content-center" *ngIf="isLoading">
+        <div class="spinner-border" style="width: 5rem; height: 5rem; margin-bottom: 3%;" role="status">
+        </div>
+      </div>
+      <div *ngIf="!isLoading">
+        <div class="row">
+          <div class="col-md-12">
+            <!-- Gráfico de Barras de Estado de Postulaciones -->
+            <ngx-charts-bar-vertical
+              [view]="view"
+              [scheme]="colorScheme"
+              [results]="single"
+              [gradient]="animations"
+              [xAxis]="xAxis"
+              [yAxis]="yAxis"
+              [legend]="showLegend"
+              [showXAxisLabel]="showXAxisLabel"
+              [showYAxisLabel]="showYAxisLabel"
+              [xAxisLabel]="xAxisLabel"
+              [yAxisLabel]="yAxisLabel">
+            </ngx-charts-bar-vertical>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-12">
+            <!-- Gráfico de Torta -->
+            <ngx-charts-pie-chart
+              [view]="view"
+              [scheme]="colorScheme"
+              [results]="pieChartData"
+              [gradient]="animations"
+              [legend]="showLegend"
+              [labels]="showLabels"
+              [doughnut]="false">
+            </ngx-charts-pie-chart>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-12">
+            <!-- Gráfico de Líneas por Año -->
+            <ngx-charts-line-chart
+              [view]="view"
+              [scheme]="colorScheme"
+              [results]="lineChartData"
+              [gradient]="animations"
+              [xAxis]="xAxis"
+              [yAxis]="yAxis"
+              [legend]="showLegend"
+              [showXAxisLabel]="showXAxisLabel"
+              [showYAxisLabel]="showYAxisLabel"
+              [xAxisLabel]="'Año'"
+              [yAxisLabel]="'Cantidad'">
+            </ngx-charts-line-chart>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

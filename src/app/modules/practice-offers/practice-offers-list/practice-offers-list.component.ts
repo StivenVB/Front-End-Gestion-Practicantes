@@ -56,9 +56,7 @@ export class PracticeOffersListComponent implements OnInit {
     this.loading = true;
     this.practiceOfferService.GetPracticeOfferList().subscribe(
       data => {
-        console.log(data);
         this.loading = false;
-        console.log(data);
         this.practiceOfferList = data;
         if (data.length > 0) {
           this.practiceOffer = data[0];
@@ -84,12 +82,10 @@ export class PracticeOffersListComponent implements OnInit {
     if (this.activeSession()) {
       this.practicePostulationService.GetPracticePostulationsByUser().subscribe(
         data => {
-          console.log(data);
           this.practicePostulationList = data;
           this.applyOffer = this.practicePostulationList.length > 0 ? false : true;
         },
         error => {
-          console.log(error);
         }
       )
     }
@@ -128,7 +124,6 @@ export class PracticeOffersListComponent implements OnInit {
 
       this.practicePostulationService.SavePracticePostulation(practicePostulation).subscribe(
         data => {
-          console.log(data);
           this.loadingPostulation = false;
           Swal.fire({
             icon: 'success',
@@ -209,7 +204,6 @@ export class PracticeOffersListComponent implements OnInit {
   }
 
   uploadFilesServer(postulationId: number | undefined) {
-    console.log('Uploading files:', this.files);
 
     if (postulationId) {
       for (let file of this.files) {
@@ -221,15 +215,12 @@ export class PracticeOffersListComponent implements OnInit {
         formData.append("relatedTable", "practicepostulation");
 
         formData.forEach((value, key) => {
-          console.log(`${key}: ${value}`);
         });
 
         this.urlRepositoryService.UploadFile(formData).subscribe(
           data => {
-            console.log(data);
           },
           error => {
-            console.error('Error uploading file:', error);
           }
         );
       }

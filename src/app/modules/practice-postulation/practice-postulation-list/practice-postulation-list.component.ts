@@ -34,12 +34,10 @@ export class PracticePostulationListComponent implements OnInit {
   LoadPracticeOffers() {
     this.practiceOfferService.GetPracticeOfferList().subscribe(
       data => {
-        console.log(data);
         this.practiceOfferList = data;
         this.FilterPracticePostulations();
       },
       error => {
-        console.log(error);
       }
     )
   }
@@ -48,12 +46,10 @@ export class PracticePostulationListComponent implements OnInit {
     this.loading = true;
     this.practicePostulationService.GetPracticePostulationsByUser().subscribe(
       data => {
-        console.log(data);
         this.practicePostulationList = data;
         this.LoadPracticeOffers();
       },
       error => {
-        console.log(error);
       }
     )
   }
@@ -75,7 +71,6 @@ export class PracticePostulationListComponent implements OnInit {
         this.practiceOfferListUser.push(practiceOfferUser);
       }
     });
-    console.log(this.practiceOfferListUser);
 
     this.loading = false;
   }
